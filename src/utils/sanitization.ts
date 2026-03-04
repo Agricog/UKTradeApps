@@ -1,17 +1,17 @@
 import DOMPurify from 'dompurify'
 
-const purifyConfig: DOMPurify.Config = {
+const purifyConfig = {
   ALLOWED_TAGS: [
     'b', 'i', 'em', 'strong', 'a', 'p', 'br', 'ul', 'ol', 'li',
   ],
   ALLOWED_ATTR: ['href', 'target', 'rel'],
   ALLOW_DATA_ATTR: false,
   ADD_ATTR: ['rel'],
-}
+} as const
 
 export const sanitizeHtml = (dirty: string): string => {
   if (typeof window === 'undefined') return dirty
-  return DOMPurify.sanitize(dirty, purifyConfig)
+  return DOMPurify.sanitize(dirty, purifyConfig) as string
 }
 
 export const sanitizePlainText = (input: string): string => {
