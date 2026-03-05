@@ -59,8 +59,18 @@ interface ClientDetails {
   email: string
 }
 
+interface LineItem {
+  template: JobTemplate
+  quantity: number
+  materials: number
+  labourHours: number
+  labour: number
+  certification: number
+  subtotal: number
+}
+
 /* =========================================================================
-   Pricing Data — UK 2025/26 Benchmarks
+   Pricing Data \u2014 UK 2025/26 Benchmarks
    ========================================================================= */
 
 const JOB_TEMPLATES: JobTemplate[] = [
@@ -293,6 +303,7 @@ const REGIONS: RegionOption[] = [
   { value: 'northern-ireland', label: 'Northern Ireland', multiplier: 0.85 },
 ]
 
+const DEFAULT_REGION: RegionOption = REGIONS[2]
 const BASE_HOURLY_RATE = 45
 
 /* =========================================================================
@@ -345,7 +356,6 @@ function generateQuoteNumber(): string {
 export default function QuoteBuilderPage() {
   const printRef = useRef<HTMLDivElement>(null)
 
-  // State
   const [selectedJobs, setSelectedJobs] = useState<SelectedJob[]>([])
   const [region, setRegion] = useState('south-west')
   const [vatRegistered, setVatRegistered] = useState(false)
@@ -373,9 +383,8 @@ export default function QuoteBuilderPage() {
   const [showQuote, setShowQuote] = useState(false)
   const [quoteNumber] = useState(generateQuoteNumber)
 
-  // Derived
-  const regionData = REGIONS.find((r) => r.value === region) || REGIONS[2]
-  const effectiveHourlyRate = labourRateOverride
+  const regionData: RegionOption = REGIONS.find((r) => r.value === region) ?? DEFAULT_REGION
+  const effectiveHourlyRate: number = labourRateOverride
     ? Number(labourRateOverride)
     : BASE_HOURLY_RATE * regionData.multiplier
 
@@ -401,37 +410,38 @@ export default function QuoteBuilderPage() {
     )
   }
 
-  // Calculations
-  const lineItems = selectedJobs.map((job) => {
-    const template = JOB_TEMPLATES.find((t) => t.id === job.templateId)
-    if (!template) return null
+  const lineItems: LineItem[] = selectedJobs
+    .map((job) => {
+      const template = JOB_TEMPLATES.find((t) => t.id === job.templateId)
+      if (!template) return null
 
-    const materials = template.baseMaterialsCost * job.quantity
-    const labourHours = template.baseLabourHours * job.quantity
-    const labour = labourHours * effectiveHourlyRate
-    const certification = template.certificationFee > 0 ? template.certificationFee : 0
+      const materials = template.baseMaterialsCost * job.quantity
+      const labourHours = template.baseLabourHours * job.quantity
+      const labour = labourHours * effectiveHourlyRate
+      const certification = template.certificationFee > 0 ? template.certificationFee : 0
 
-    return {
-      template,
-      quantity: job.quantity,
-      materials,
-      labourHours,
-      labour,
-      certification,
-      subtotal: materials + labour + certification,
-    }
-  }).filter(Boolean) as NonNullable<(typeof lineItems)[number]>[]
+      return {
+        template,
+        quantity: job.quantity,
+        materials,
+        labourHours,
+        labour,
+        certification,
+        subtotal: materials + labour + certification,
+      }
+    })
+    .filter((item): item is LineItem => item !== null)
 
-  const totalMaterials = lineItems.reduce((sum, item) => sum + item.materials, 0)
-  const totalLabour = lineItems.reduce((sum, item) => sum + item.labour, 0)
-  const totalCertification = lineItems.reduce((sum, item) => sum + item.certification, 0)
-  const subtotal = totalMaterials + totalLabour + totalCertification
-  const vatAmount = vatRegistered ? subtotal * 0.2 : 0
-  const cisAmount = cisDeduction ? totalLabour * 0.2 : 0
-  const grandTotal = subtotal + vatAmount - cisAmount
+  const totalMaterials: number = lineItems.reduce((sum: number, item: LineItem) => sum + item.materials, 0)
+  const totalLabour: number = lineItems.reduce((sum: number, item: LineItem) => sum + item.labour, 0)
+  const totalCertification: number = lineItems.reduce((sum: number, item: LineItem) => sum + item.certification, 0)
+  const subtotal: number = totalMaterials + totalLabour + totalCertification
+  const vatAmount: number = vatRegistered ? subtotal * 0.2 : 0
+  const cisAmount: number = cisDeduction ? totalLabour * 0.2 : 0
+  const grandTotal: number = subtotal + vatAmount - cisAmount
 
-  const hasNotifiableWork = lineItems.some((item) => item.template.isNotifiable)
-  const totalLabourHours = lineItems.reduce((sum, item) => sum + item.labourHours, 0)
+  const hasNotifiableWork: boolean = lineItems.some((item: LineItem) => item.template.isNotifiable)
+  const totalLabourHours: number = lineItems.reduce((sum: number, item: LineItem) => sum + item.labourHours, 0)
 
   const handleGenerateQuote = () => {
     if (selectedJobs.length === 0) return
@@ -457,7 +467,6 @@ export default function QuoteBuilderPage() {
   const formatDate = (d: Date) =>
     d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 
-  // ---- Quote Preview (print-ready) ----
   if (showQuote) {
     return (
       <>
@@ -474,7 +483,6 @@ export default function QuoteBuilderPage() {
           `}</style>
         </Helmet>
 
-        {/* Screen controls */}
         <div className="no-print sticky top-0 z-40 border-b border-surface-200 bg-white">
           <div className="container-app flex h-16 items-center justify-between">
             <button type="button" onClick={handleEdit} className="btn-secondary text-sm">
@@ -488,9 +496,7 @@ export default function QuoteBuilderPage() {
           </div>
         </div>
 
-        {/* Printable quote */}
         <div id="print-quote" ref={printRef} className="mx-auto max-w-3xl bg-white px-6 py-10 sm:px-10">
-          {/* Header */}
           <div className="flex items-start justify-between border-b border-surface-200 pb-6">
             <div>
               <h1 className="font-display text-2xl font-extrabold text-surface-900">
@@ -523,7 +529,6 @@ export default function QuoteBuilderPage() {
             </div>
           </div>
 
-          {/* Client */}
           <div className="mt-6 rounded-lg border border-surface-200 px-5 py-4">
             <p className="text-xs font-semibold uppercase tracking-wider text-surface-500">Quote for</p>
             <p className="mt-1 font-semibold text-surface-900">
@@ -540,7 +545,6 @@ export default function QuoteBuilderPage() {
             )}
           </div>
 
-          {/* Line items */}
           <table className="mt-6 w-full text-sm">
             <thead>
               <tr className="border-b-2 border-surface-300 text-left text-xs font-semibold uppercase tracking-wider text-surface-500">
@@ -553,7 +557,7 @@ export default function QuoteBuilderPage() {
               </tr>
             </thead>
             <tbody>
-              {lineItems.map((item) => (
+              {lineItems.map((item: LineItem) => (
                 <tr key={item.template.id} className="border-b border-surface-100">
                   <td className="py-3 pr-2">
                     <p className="font-medium text-surface-900">{item.template.name}</p>
@@ -580,7 +584,6 @@ export default function QuoteBuilderPage() {
             </tbody>
           </table>
 
-          {/* Totals */}
           <div className="mt-4 flex justify-end">
             <div className="w-64 space-y-1 text-sm">
               <div className="flex justify-between text-surface-600">
@@ -620,7 +623,6 @@ export default function QuoteBuilderPage() {
             </div>
           </div>
 
-          {/* Part P notice */}
           {hasNotifiableWork && (
             <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
               <p className="font-semibold">Part P Building Regulations Notice</p>
@@ -632,7 +634,6 @@ export default function QuoteBuilderPage() {
             </div>
           )}
 
-          {/* Terms */}
           <div className="mt-6 border-t border-surface-200 pt-4 text-xs text-surface-500 leading-relaxed">
             <p className="font-semibold text-surface-700">Terms & Conditions</p>
             <p className="mt-1">
@@ -645,13 +646,11 @@ export default function QuoteBuilderPage() {
             </p>
           </div>
 
-          {/* Footer */}
           <div className="mt-8 border-t border-surface-200 pt-4 text-center text-xs text-surface-400">
             Quote generated with UKTradeApps \u2014 uktradeapps.co.uk
           </div>
         </div>
 
-        {/* Newsletter CTA (screen only) */}
         <div className="no-print">
           <NewsletterSignup
             source="quote-builder"
@@ -663,7 +662,6 @@ export default function QuoteBuilderPage() {
     )
   }
 
-  // ---- Builder form ----
   return (
     <>
       <Helmet>
@@ -708,7 +706,6 @@ export default function QuoteBuilderPage() {
       </header>
 
       <main id="main-content">
-        {/* Hero */}
         <section className="relative overflow-hidden bg-brand-950 text-white">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(63,104,235,0.3),transparent)]" />
           <div className="container-app relative py-12 text-center sm:py-16">
@@ -729,9 +726,7 @@ export default function QuoteBuilderPage() {
         <div className="section-spacing bg-surface-50">
           <div className="container-app">
             <div className="grid gap-8 lg:grid-cols-3">
-              {/* Left column — job selection */}
               <div className="lg:col-span-2 space-y-8">
-                {/* Job templates */}
                 <div className="card">
                   <h2 className="font-display text-xl font-bold text-surface-900">
                     Select jobs
@@ -824,7 +819,6 @@ export default function QuoteBuilderPage() {
                   })}
                 </div>
 
-                {/* Business details */}
                 <div className="card">
                   <h2 className="font-display text-xl font-bold text-surface-900">
                     Your business details
@@ -843,7 +837,6 @@ export default function QuoteBuilderPage() {
                   </div>
                 </div>
 
-                {/* Client details */}
                 <div className="card">
                   <h2 className="font-display text-xl font-bold text-surface-900">
                     Client details
@@ -857,9 +850,7 @@ export default function QuoteBuilderPage() {
                 </div>
               </div>
 
-              {/* Right column — settings + live total */}
               <div className="space-y-6">
-                {/* Region & rate */}
                 <div className="card">
                   <h2 className="font-display text-lg font-bold text-surface-900">
                     Pricing settings
@@ -950,7 +941,6 @@ export default function QuoteBuilderPage() {
                   </div>
                 </div>
 
-                {/* Live total */}
                 <div className="card border-brand-200 bg-brand-50">
                   <h2 className="font-display text-lg font-bold text-brand-900">
                     Quote summary
@@ -962,7 +952,7 @@ export default function QuoteBuilderPage() {
                     </p>
                   ) : (
                     <div className="mt-3 space-y-2 text-sm">
-                      {lineItems.map((item) => (
+                      {lineItems.map((item: LineItem) => (
                         <div key={item.template.id} className="flex justify-between text-brand-800">
                           <span>
                             {item.template.name}
@@ -1026,7 +1016,6 @@ export default function QuoteBuilderPage() {
                   </p>
                 </div>
 
-                {/* CTA */}
                 <div className="card">
                   <h2 className="font-display text-lg font-bold text-surface-900">
                     Need quoting software?
