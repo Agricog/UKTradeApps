@@ -18,41 +18,7 @@ import {
   ChevronUp,
 } from 'lucide-react'
 import { useState } from 'react'
-
 import NewsletterSignup from '../components/NewsletterSignup'
-```
-
-**Change 2 — replace the placeholder newsletter section.** Find this block (near the bottom, before the footer):
-```
-        {/* ==============================================================
-            Newsletter CTA
-        =============================================================== */}
-        <section className="section-spacing bg-surface-50" aria-labelledby="newsletter-heading">
-          <div className="container-app">
-            <div className="mx-auto max-w-2xl text-center">
-              <BookOpen className="mx-auto h-10 w-10 text-brand-600" />
-              <h2 id="newsletter-heading" className="mt-4 font-display text-3xl font-bold text-surface-900 sm:text-4xl">
-                Stay ahead of the curve
-              </h2>
-              <p className="mt-4 text-lg text-surface-600">
-                A weekly roundup of the best new apps, tools and deals for UK
-                trades. No spam, no fluff &mdash; just useful software news
-                written by people who understand your trade.
-              </p>
-              <p className="mt-6 text-sm text-surface-500">
-                Newsletter launching soon. Check back for signup.
-              </p>
-            </div>
-          </div>
-        </section>
-```
-
-Replace that entire block with:
-```
-        {/* ==============================================================
-            Newsletter CTA
-        =============================================================== */}
-        <NewsletterSignup source="homepage" />
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://uktradeapps.co.uk'
 
@@ -120,7 +86,7 @@ const FAQS = [
   {
     question: 'How does the "Find My Stack" quiz work?',
     answer:
-      'Our free quiz asks five simple questions about your trade, team size, budget, and what you need help with. Based on your answers, we recommend a personalised software stack — the combination of tools that best fits your specific situation. No signup required.',
+      'Our free quiz asks five simple questions about your trade, team size, budget, and what you need help with. Based on your answers, we recommend a personalised software stack \u2014 the combination of tools that best fits your specific situation. No signup required.',
   },
   {
     question: 'Can I list my software on UKTradeApps?',
@@ -155,7 +121,7 @@ const FAQS = [
 ] as const
 
 /* =========================================================================
-   Structured Data — All 8 JSON-LD Schemas
+   Structured Data \u2014 All 8 JSON-LD Schemas
    ========================================================================= */
 
 const STRUCTURED_DATA = {
@@ -271,7 +237,7 @@ const STRUCTURED_DATA = {
           '@type': 'DefinedTerm',
           name: 'EICR',
           description:
-            'Electrical Installation Condition Report — a formal document produced after inspecting an electrical installation in the UK, required under BS 7671.',
+            'Electrical Installation Condition Report \u2014 a formal document produced after inspecting an electrical installation in the UK, required under BS 7671.',
         },
         {
           '@type': 'DefinedTerm',
@@ -371,7 +337,7 @@ export default function HomePage() {
         <meta property="og:image" content={`${APP_URL}/og-uktradeapps.jpg`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="UKTradeApps — Find the Right Software for Your Trade" />
+        <meta property="og:image:alt" content="UKTradeApps \u2014 Find the Right Software for Your Trade" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={APP_URL} />
         <meta property="og:site_name" content="UKTradeApps" />
@@ -388,10 +354,10 @@ export default function HomePage() {
           content="The UK's only trade-specific app directory. Free quiz finds your perfect software stack in minutes."
         />
         <meta name="twitter:image" content={`${APP_URL}/og-uktradeapps.jpg`} />
-        <meta name="twitter:image:alt" content="UKTradeApps — Find the Right Software for Your Trade" />
+        <meta name="twitter:image:alt" content="UKTradeApps \u2014 Find the Right Software for Your Trade" />
 
         {/* Point 10: Author & brand E-E-A-T signals */}
-        <meta name="author" content="UKTradeApps — Autaimate Portfolio" />
+        <meta name="author" content="UKTradeApps \u2014 Autaimate Portfolio" />
         <meta name="publisher" content="Autaimate" />
         <link rel="author" href={`${APP_URL}/about`} />
 
@@ -627,7 +593,7 @@ export default function HomePage() {
         </section>
 
         {/* ==============================================================
-            Why UK-Specific Matters — Educational Content (2500+ words)
+            Why UK-Specific Matters \u2014 Educational Content (2500+ words)
         =============================================================== */}
         <section className="section-spacing bg-surface-50" aria-labelledby="why-heading">
           <div className="container-app">
@@ -870,7 +836,7 @@ export default function HomePage() {
         </section>
 
         {/* ==============================================================
-            FAQ Section — 12 FAQs with schema (Point 13)
+            FAQ Section \u2014 12 FAQs with schema (Point 13)
         =============================================================== */}
         <section className="section-spacing bg-white" aria-labelledby="faq-heading">
           <div className="container-app">
@@ -902,24 +868,7 @@ export default function HomePage() {
         {/* ==============================================================
             Newsletter CTA
         =============================================================== */}
-        <section className="section-spacing bg-surface-50" aria-labelledby="newsletter-heading">
-          <div className="container-app">
-            <div className="mx-auto max-w-2xl text-center">
-              <BookOpen className="mx-auto h-10 w-10 text-brand-600" />
-              <h2 id="newsletter-heading" className="mt-4 font-display text-3xl font-bold text-surface-900 sm:text-4xl">
-                Stay ahead of the curve
-              </h2>
-              <p className="mt-4 text-lg text-surface-600">
-                A weekly roundup of the best new apps, tools and deals for UK
-                trades. No spam, no fluff &mdash; just useful software news
-                written by people who understand your trade.
-              </p>
-              <p className="mt-6 text-sm text-surface-500">
-                Newsletter launching soon. Check back for signup.
-              </p>
-            </div>
-          </div>
-        </section>
+        <NewsletterSignup source="homepage" />
       </main>
 
       {/* ==============================================================
@@ -982,7 +931,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-10 border-t border-surface-200 pt-6 text-center text-xs text-surface-400">
-            &copy; {new Date().getFullYear()} UKTradeApps. Part of the Autaimate
+            {'\u00a9'} {new Date().getFullYear()} UKTradeApps. Part of the Autaimate
             portfolio. All rights reserved.
           </div>
         </div>
