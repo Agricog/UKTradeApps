@@ -10,7 +10,6 @@ import {
   Star,
   CheckCircle2,
   HelpCircle,
-  BookOpen,
   Users,
   PoundSterling,
   Wifi,
