@@ -20,6 +20,41 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 
+import NewsletterSignup from '../components/NewsletterSignup'
+```
+
+**Change 2 — replace the placeholder newsletter section.** Find this block (near the bottom, before the footer):
+```
+        {/* ==============================================================
+            Newsletter CTA
+        =============================================================== */}
+        <section className="section-spacing bg-surface-50" aria-labelledby="newsletter-heading">
+          <div className="container-app">
+            <div className="mx-auto max-w-2xl text-center">
+              <BookOpen className="mx-auto h-10 w-10 text-brand-600" />
+              <h2 id="newsletter-heading" className="mt-4 font-display text-3xl font-bold text-surface-900 sm:text-4xl">
+                Stay ahead of the curve
+              </h2>
+              <p className="mt-4 text-lg text-surface-600">
+                A weekly roundup of the best new apps, tools and deals for UK
+                trades. No spam, no fluff &mdash; just useful software news
+                written by people who understand your trade.
+              </p>
+              <p className="mt-6 text-sm text-surface-500">
+                Newsletter launching soon. Check back for signup.
+              </p>
+            </div>
+          </div>
+        </section>
+```
+
+Replace that entire block with:
+```
+        {/* ==============================================================
+            Newsletter CTA
+        =============================================================== */}
+        <NewsletterSignup source="homepage" />
+
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://uktradeapps.co.uk'
 
 /* =========================================================================
