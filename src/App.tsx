@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import * as Sentry from '@sentry/react'
 import HomePage from './pages/HomePage'
 import TradeCategoryPage from './pages/TradeCategoryPage'
+import ListingPage from './pages/ListingPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes)
@@ -16,8 +17,8 @@ export default function App() {
         {/* Trade category pages */}
         <Route path="/:tradeSlug" element={<TradeCategoryPage />} />
 
-        {/* Individual listing page (Phase 3) */}
-        {/* <Route path="/:tradeSlug/:listingSlug" element={<ListingPage />} /> */}
+        {/* Individual listing page */}
+        <Route path="/:tradeSlug/:listingSlug" element={<ListingPage />} />
 
         {/* Quiz (Phase 4) */}
         {/* <Route path="/quiz" element={<QuizPage />} /> */}
