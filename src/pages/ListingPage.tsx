@@ -5,17 +5,13 @@ import {
   ArrowLeft,
   ExternalLink,
   Shield,
-  PoundSterling,
   CheckCircle2,
   XCircle,
-  Wifi,
-  WifiOff,
-  Clock,
-  Star,
   Monitor,
+  Star,
   Loader2,
   ArrowRight,
-  Link2,
+  Plug,
 } from 'lucide-react'
 import { getListingBySlug } from '../services/api'
 import { captureError } from '../utils/errorTracking'
