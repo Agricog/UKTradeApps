@@ -11,7 +11,6 @@ import {
   Star,
   Loader2,
   ArrowRight,
-  Plug,
 } from 'lucide-react'
 import { getListingBySlug } from '../services/api'
 import { captureError } from '../utils/errorTracking'
@@ -368,7 +367,7 @@ export default function ListingPage() {
                     {listing.integrations.length > 0 && (
                       <div className="card">
                         <h2 className="font-display text-xl font-bold text-surface-900">
-                          <Link2 className="mr-2 inline-block h-5 w-5 text-brand-600" />
+                          <Link className="mr-2 inline-block h-5 w-5 text-brand-600" />
                           Integrations
                         </h2>
                         <div className="mt-4 flex flex-wrap gap-2">
