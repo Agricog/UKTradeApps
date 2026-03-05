@@ -5,6 +5,7 @@ import TradeCategoryPage from './pages/TradeCategoryPage'
 import ListingPage from './pages/ListingPage'
 import QuizPage from './pages/QuizPage'
 import SubmitPage from './pages/SubmitPage'
+import QuoteBuilderPage from './pages/QuoteBuilderPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes)
@@ -21,6 +22,9 @@ export default function App() {
 
         {/* Vendor submission — must be before /:tradeSlug */}
         <Route path="/submit" element={<SubmitPage />} />
+
+        {/* Quote builder — must be before /:tradeSlug */}
+        <Route path="/quote" element={<QuoteBuilderPage />} />
 
         {/* Trade category pages */}
         <Route path="/:tradeSlug" element={<TradeCategoryPage />} />
