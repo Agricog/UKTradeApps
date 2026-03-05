@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import {
   Zap,
@@ -49,13 +49,6 @@ interface QuizRecommendation {
   }
   matchScore: number
   matchReasons: string[]
-}
-
-interface QuizAnswers {
-  tradeSlug: string
-  teamSize: string
-  budget: string
-  painPoints: string[]
 }
 
 /* =========================================================================
@@ -572,7 +565,6 @@ function ResultCard({
 const TOTAL_STEPS = 4
 
 export default function QuizPage() {
-  const navigate = useNavigate()
 
   const [step, setStep] = useState(1)
   const [tradeSlug, setTradeSlug] = useState('')
