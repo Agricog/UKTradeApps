@@ -15,7 +15,7 @@ import {
   Monitor,
   Loader2,
   ArrowRight,
-  Plug,
+  Link2,
 } from 'lucide-react'
 import { getListingBySlug } from '../services/api'
 import { captureError } from '../utils/errorTracking'
@@ -23,10 +23,6 @@ import { trackListingView, trackListingClick } from '../utils/analytics'
 import type { Listing } from '../types/listing'
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://uktradeapps.co.uk'
-
-/* =========================================================================
-   Check Item Component
-   ========================================================================= */
 
 function CheckItem({
   label,
@@ -60,10 +56,6 @@ function CheckItem({
   )
 }
 
-/* =========================================================================
-   Structured Data Builder
-   ========================================================================= */
-
 function buildStructuredData(listing: Listing, tradeSlug: string) {
   return {
     '@context': 'https://schema.org',
@@ -83,14 +75,6 @@ function buildStructuredData(listing: Listing, tradeSlug: string) {
               ? String(listing.priceFromMonthly)
               : undefined,
           priceCurrency: 'GBP',
-          ...(listing.hasFreeTrial && {
-            priceSpecification: {
-              '@type': 'UnitPriceSpecification',
-              priceCurrency: 'GBP',
-              price: '0',
-              description: 'Free trial available',
-            },
-          }),
         },
       },
       {
@@ -127,10 +111,6 @@ function buildStructuredData(listing: Listing, tradeSlug: string) {
     ],
   }
 }
-
-/* =========================================================================
-   ListingPage Component
-   ========================================================================= */
 
 export default function ListingPage() {
   const { tradeSlug, listingSlug } = useParams<{
@@ -184,11 +164,11 @@ export default function ListingPage() {
   }
 
   const metaTitle = listing
-    ? `${listing.name} — ${listing.tagline} | UKTradeApps`
+    ? `${listing.name} \u2014 ${listing.tagline} | UKTradeApps`
     : 'Loading... | UKTradeApps'
 
   const metaDescription = listing
-    ? `${listing.name}: ${listing.tagline}. ${listing.hasFreeTier ? 'Free to use.' : listing.priceFromMonthly ? `From £${listing.priceFromMonthly}/month.` : ''} UK pricing, independently reviewed on UKTradeApps.`
+    ? `${listing.name}: ${listing.tagline}. ${listing.hasFreeTier ? 'Free to use.' : listing.priceFromMonthly ? `From \u00A3${listing.priceFromMonthly}/month.` : ''} UK pricing, independently reviewed on UKTradeApps.`
     : ''
 
   return (
@@ -197,39 +177,24 @@ export default function ListingPage() {
         <Helmet>
           <title>{metaTitle}</title>
           <meta name="description" content={metaDescription} />
-          <link
-            rel="canonical"
-            href={`${APP_URL}/${tradeSlug}/${listing.slug}`}
-          />
-          <meta
-            name="robots"
-            content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-          />
+          <link rel="canonical" href={`${APP_URL}/${tradeSlug}/${listing.slug}`} />
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
           <meta property="og:title" content={metaTitle} />
           <meta property="og:description" content={metaDescription} />
-          <meta
-            property="og:image"
-            content={`${APP_URL}/og-uktradeapps.jpg`}
-          />
+          <meta property="og:image" content={`${APP_URL}/og-uktradeapps.jpg`} />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
-          <meta
-            property="og:url"
-            content={`${APP_URL}/${tradeSlug}/${listing.slug}`}
-          />
+          <meta property="og:url" content={`${APP_URL}/${tradeSlug}/${listing.slug}`} />
           <meta property="og:type" content="website" />
           <meta property="og:locale" content="en_GB" />
 
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={metaTitle} />
           <meta name="twitter:description" content={metaDescription} />
-          <meta
-            name="twitter:image"
-            content={`${APP_URL}/og-uktradeapps.jpg`}
-          />
+          <meta name="twitter:image" content={`${APP_URL}/og-uktradeapps.jpg`} />
 
-          <meta name="author" content="UKTradeApps — Autaimate Portfolio" />
+          <meta name="author" content="UKTradeApps \u2014 Autaimate Portfolio" />
 
           <script type="application/ld+json">
             {JSON.stringify(buildStructuredData(listing, tradeSlug))}
@@ -241,53 +206,22 @@ export default function ListingPage() {
         Skip to main content
       </a>
 
-      {/* Navigation */}
       <header className="sticky top-0 z-40 border-b border-surface-200 bg-white/95 backdrop-blur-sm">
-        <nav
-          className="container-app flex h-16 items-center justify-between"
-          aria-label="Main navigation"
-        >
-          <Link
-            to="/"
-            className="font-display text-xl font-bold text-brand-700"
-          >
+        <nav className="container-app flex h-16 items-center justify-between" aria-label="Main navigation">
+          <Link to="/" className="font-display text-xl font-bold text-brand-700">
             UK<span className="text-accent-500">Trade</span>Apps
           </Link>
-
           <div className="flex items-center gap-4">
-            <Link
-              to="/electricians"
-              className="hidden text-sm font-medium text-surface-600 transition-colors hover:text-brand-600 lg:block"
-            >
-              Electricians
-            </Link>
-            <Link
-              to="/builders"
-              className="hidden text-sm font-medium text-surface-600 transition-colors hover:text-brand-600 lg:block"
-            >
-              Builders
-            </Link>
-            <Link
-              to="/plumbers"
-              className="hidden text-sm font-medium text-surface-600 transition-colors hover:text-brand-600 lg:block"
-            >
-              Plumbers
-            </Link>
-            <Link
-              to="/quiz"
-              className="hidden text-sm font-medium text-surface-600 transition-colors hover:text-brand-600 sm:block"
-            >
-              Find My Stack
-            </Link>
-            <Link to="/submit" className="btn-primary text-sm">
-              List Your App
-            </Link>
+            <Link to="/electricians" className="hidden text-sm font-medium text-surface-600 transition-colors hover:text-brand-600 lg:block">Electricians</Link>
+            <Link to="/builders" className="hidden text-sm font-medium text-surface-600 transition-colors hover:text-brand-600 lg:block">Builders</Link>
+            <Link to="/plumbers" className="hidden text-sm font-medium text-surface-600 transition-colors hover:text-brand-600 lg:block">Plumbers</Link>
+            <Link to="/quiz" className="hidden text-sm font-medium text-surface-600 transition-colors hover:text-brand-600 sm:block">Find My Stack</Link>
+            <Link to="/submit" className="btn-primary text-sm">List Your App</Link>
           </div>
         </nav>
       </header>
 
       <main id="main-content">
-        {/* Loading state */}
         {isLoading && (
           <div className="flex min-h-[60vh] items-center justify-center">
             <div className="flex items-center gap-3 text-surface-500">
@@ -297,7 +231,6 @@ export default function ListingPage() {
           </div>
         )}
 
-        {/* Error state */}
         {error && !isLoading && (
           <div className="container-app py-20">
             <div className="mx-auto max-w-md rounded-lg border border-red-200 bg-red-50 px-6 py-8 text-center">
@@ -310,34 +243,18 @@ export default function ListingPage() {
           </div>
         )}
 
-        {/* Listing content */}
         {listing && !isLoading && (
           <>
-            {/* Breadcrumb + Header */}
             <section className="border-b border-surface-200 bg-white">
               <div className="container-app py-8 sm:py-12">
-                {/* Breadcrumb */}
-                <nav
-                  className="mb-6 flex items-center gap-2 text-sm text-surface-500"
-                  aria-label="Breadcrumb"
-                >
-                  <Link
-                    to="/"
-                    className="transition-colors hover:text-brand-600"
-                  >
-                    Home
-                  </Link>
+                <nav className="mb-6 flex items-center gap-2 text-sm text-surface-500" aria-label="Breadcrumb">
+                  <Link to="/" className="transition-colors hover:text-brand-600">Home</Link>
                   <span aria-hidden="true">/</span>
-                  <Link
-                    to={`/${tradeSlug}`}
-                    className="transition-colors hover:text-brand-600"
-                  >
+                  <Link to={`/${tradeSlug}`} className="transition-colors hover:text-brand-600">
                     {tradeSlug.charAt(0).toUpperCase() + tradeSlug.slice(1)}
                   </Link>
                   <span aria-hidden="true">/</span>
-                  <span className="text-surface-900 font-medium">
-                    {listing.name}
-                  </span>
+                  <span className="text-surface-900 font-medium">{listing.name}</span>
                 </nav>
 
                 <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
@@ -359,38 +276,31 @@ export default function ListingPage() {
                         </span>
                       )}
                     </div>
-
-                    <p className="mt-3 text-lg text-surface-600 leading-relaxed">
-                      {listing.tagline}
-                    </p>
-
+                    <p className="mt-3 text-lg text-surface-600 leading-relaxed">{listing.tagline}</p>
                     {listing.lastVerifiedAt && (
                       <p className="mt-2 text-2xs text-surface-400">
                         Last verified by UKTradeApps:{' '}
-                        {new Date(listing.lastVerifiedAt).toLocaleDateString(
-                          'en-GB',
-                          { day: 'numeric', month: 'long', year: 'numeric' },
-                        )}
+                        {new Date(listing.lastVerifiedAt).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        })}
                       </p>
                     )}
                   </div>
 
                   <div className="flex flex-col gap-3 sm:items-end">
                     {listing.hasFreeTier ? (
-                      <p className="font-display text-3xl font-bold text-emerald-600">
-                        Free
-                      </p>
+                      <p className="font-display text-3xl font-bold text-emerald-600">Free</p>
                     ) : listing.priceFromMonthly ? (
                       <div className="text-right">
                         <p className="font-display text-3xl font-bold text-surface-900">
-                          £{listing.priceFromMonthly.toFixed(2)}
-                          <span className="text-base font-normal text-surface-500">
-                            /month
-                          </span>
+                          {'\u00A3'}{listing.priceFromMonthly.toFixed(2)}
+                          <span className="text-base font-normal text-surface-500">/month</span>
                         </p>
                         {listing.priceFromAnnual && (
                           <p className="text-sm text-surface-500">
-                            £{listing.priceFromAnnual.toFixed(2)}/year
+                            {'\u00A3'}{listing.priceFromAnnual.toFixed(2)}/year
                           </p>
                         )}
                       </div>
@@ -400,8 +310,7 @@ export default function ListingPage() {
                     {listing.hasFreeTrial && !listing.hasFreeTier && (
                       <span className="badge-success">Free trial available</span>
                     )}
-
-                    
+                    <a
                       href={listing.websiteUrl}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -416,13 +325,10 @@ export default function ListingPage() {
               </div>
             </section>
 
-            {/* Main content grid */}
             <section className="section-spacing bg-surface-50">
               <div className="container-app">
                 <div className="grid gap-8 lg:grid-cols-3">
-                  {/* Left column — description + compliance */}
                   <div className="lg:col-span-2 space-y-8">
-                    {/* Description */}
                     <div className="card">
                       <h2 className="font-display text-xl font-bold text-surface-900">
                         About {listing.name}
@@ -432,7 +338,6 @@ export default function ListingPage() {
                       </div>
                     </div>
 
-                    {/* Compliance notes */}
                     {listing.complianceNotes && (
                       <div className="card">
                         <h2 className="font-display text-xl font-bold text-surface-900">
@@ -445,7 +350,6 @@ export default function ListingPage() {
                       </div>
                     )}
 
-                    {/* Platforms */}
                     {listing.platforms.length > 0 && (
                       <div className="card">
                         <h2 className="font-display text-xl font-bold text-surface-900">
@@ -465,11 +369,10 @@ export default function ListingPage() {
                       </div>
                     )}
 
-                    {/* Integrations */}
                     {listing.integrations.length > 0 && (
                       <div className="card">
                         <h2 className="font-display text-xl font-bold text-surface-900">
-                          <Plug className="mr-2 inline-block h-5 w-5 text-brand-600" />
+                          <Link2 className="mr-2 inline-block h-5 w-5 text-brand-600" />
                           Integrations
                         </h2>
                         <div className="mt-4 flex flex-wrap gap-2">
@@ -486,63 +389,35 @@ export default function ListingPage() {
                     )}
                   </div>
 
-                  {/* Right column — verification checks */}
                   <div className="space-y-6">
-                    {/* UK verification card */}
                     <div className="card">
                       <h2 className="font-display text-lg font-bold text-surface-900">
                         UKTradeApps verification
                       </h2>
                       <div className="mt-2 divide-y divide-surface-100">
-                        <CheckItem
-                          label="UK pricing in GBP"
-                          checked={listing.ukPricingGbp}
-                        />
-                        <CheckItem
-                          label="UK compliance verified"
-                          checked={listing.ukComplianceVerified}
-                        />
-                        <CheckItem
-                          label="UK customer support"
-                          checked={listing.ukSupportAvailable}
-                          detail={listing.ukSupportHours}
-                        />
-                        <CheckItem
-                          label="Works offline"
-                          checked={listing.offlineCapable}
-                        />
-                        <CheckItem
-                          label="VAT support"
-                          checked={listing.vatSupport}
-                        />
+                        <CheckItem label="UK pricing in GBP" checked={listing.ukPricingGbp} />
+                        <CheckItem label="UK compliance verified" checked={listing.ukComplianceVerified} />
+                        <CheckItem label="UK customer support" checked={listing.ukSupportAvailable} detail={listing.ukSupportHours} />
+                        <CheckItem label="Works offline" checked={listing.offlineCapable} />
+                        <CheckItem label="VAT support" checked={listing.vatSupport} />
                       </div>
                     </div>
 
-                    {/* Pricing card */}
                     {listing.pricingNotes && (
                       <div className="card">
-                        <h2 className="font-display text-lg font-bold text-surface-900">
-                          Pricing notes
-                        </h2>
-                        <p className="mt-2 text-sm text-surface-600 leading-relaxed">
-                          {listing.pricingNotes}
-                        </p>
+                        <h2 className="font-display text-lg font-bold text-surface-900">Pricing notes</h2>
+                        <p className="mt-2 text-sm text-surface-600 leading-relaxed">{listing.pricingNotes}</p>
                       </div>
                     )}
 
-                    {/* CTA card */}
                     <div className="card bg-brand-50 border-brand-200">
                       <h2 className="font-display text-lg font-bold text-brand-900">
                         Not sure if {listing.name} is right for you?
                       </h2>
                       <p className="mt-2 text-sm text-brand-700">
-                        Take our free quiz and get a personalised software stack
-                        recommendation for your business.
+                        Take our free quiz and get a personalised software stack recommendation for your business.
                       </p>
-                      <Link
-                        to="/quiz"
-                        className="btn-primary mt-4 w-full justify-center"
-                      >
+                      <Link to="/quiz" className="btn-primary mt-4 w-full justify-center">
                         Find my stack
                         <ArrowRight className="h-4 w-4" />
                       </Link>
@@ -552,13 +427,9 @@ export default function ListingPage() {
               </div>
             </section>
 
-            {/* Back to trade */}
             <section className="bg-white py-10">
               <div className="container-app text-center">
-                <Link
-                  to={`/${tradeSlug}`}
-                  className="btn-secondary"
-                >
+                <Link to={`/${tradeSlug}`} className="btn-secondary">
                   <ArrowLeft className="h-4 w-4" />
                   Back to all {tradeSlug} software
                 </Link>
@@ -568,84 +439,43 @@ export default function ListingPage() {
         )}
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-surface-200 bg-white py-12">
         <div className="container-app">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <Link
-                to="/"
-                className="font-display text-lg font-bold text-brand-700"
-              >
+              <Link to="/" className="font-display text-lg font-bold text-brand-700">
                 UK<span className="text-accent-500">Trade</span>Apps
               </Link>
               <p className="mt-2 text-sm text-surface-500 leading-relaxed">
-                The UK&apos;s first trade-specific software directory. Built by
-                tradespeople with 40+ years experience.
+                The UK&apos;s first trade-specific software directory. Built by tradespeople with 40+ years experience.
               </p>
             </div>
-
             <div>
-              <h3 className="font-display text-sm font-bold text-surface-900">
-                Trades
-              </h3>
-              <nav
-                className="mt-3 flex flex-col gap-2 text-sm text-surface-600"
-                aria-label="Trade categories"
-              >
-                <Link to="/electricians" className="hover:text-brand-600">
-                  Software for Electricians
-                </Link>
-                <Link to="/builders" className="hover:text-brand-600">
-                  Software for Builders
-                </Link>
-                <Link to="/plumbers" className="hover:text-brand-600">
-                  Software for Plumbers
-                </Link>
+              <h3 className="font-display text-sm font-bold text-surface-900">Trades</h3>
+              <nav className="mt-3 flex flex-col gap-2 text-sm text-surface-600" aria-label="Trade categories">
+                <Link to="/electricians" className="hover:text-brand-600">Software for Electricians</Link>
+                <Link to="/builders" className="hover:text-brand-600">Software for Builders</Link>
+                <Link to="/plumbers" className="hover:text-brand-600">Software for Plumbers</Link>
               </nav>
             </div>
-
             <div>
-              <h3 className="font-display text-sm font-bold text-surface-900">
-                Tools
-              </h3>
-              <nav
-                className="mt-3 flex flex-col gap-2 text-sm text-surface-600"
-                aria-label="Tools"
-              >
-                <Link to="/quiz" className="hover:text-brand-600">
-                  Find My Stack Quiz
-                </Link>
-                <Link to="/submit" className="hover:text-brand-600">
-                  List Your App
-                </Link>
+              <h3 className="font-display text-sm font-bold text-surface-900">Tools</h3>
+              <nav className="mt-3 flex flex-col gap-2 text-sm text-surface-600" aria-label="Tools">
+                <Link to="/quiz" className="hover:text-brand-600">Find My Stack Quiz</Link>
+                <Link to="/submit" className="hover:text-brand-600">List Your App</Link>
               </nav>
             </div>
-
             <div>
-              <h3 className="font-display text-sm font-bold text-surface-900">
-                Company
-              </h3>
-              <nav
-                className="mt-3 flex flex-col gap-2 text-sm text-surface-600"
-                aria-label="Company"
-              >
-                <Link to="/about" className="hover:text-brand-600">
-                  About UKTradeApps
-                </Link>
-                <Link to="/privacy" className="hover:text-brand-600">
-                  Privacy Policy
-                </Link>
-                <Link to="/terms" className="hover:text-brand-600">
-                  Terms of Use
-                </Link>
+              <h3 className="font-display text-sm font-bold text-surface-900">Company</h3>
+              <nav className="mt-3 flex flex-col gap-2 text-sm text-surface-600" aria-label="Company">
+                <Link to="/about" className="hover:text-brand-600">About UKTradeApps</Link>
+                <Link to="/privacy" className="hover:text-brand-600">Privacy Policy</Link>
+                <Link to="/terms" className="hover:text-brand-600">Terms of Use</Link>
               </nav>
             </div>
           </div>
-
           <div className="mt-10 border-t border-surface-200 pt-6 text-center text-xs text-surface-400">
-            &copy; {new Date().getFullYear()} UKTradeApps. Part of the Autaimate
-            portfolio. All rights reserved.
+            &copy; {new Date().getFullYear()} UKTradeApps. Part of the Autaimate portfolio. All rights reserved.
           </div>
         </div>
       </footer>
