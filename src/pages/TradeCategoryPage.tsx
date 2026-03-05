@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import { Link, useParams, Navigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import {
   Zap,
   Wrench,
@@ -10,8 +11,16 @@ import {
   PoundSterling,
   CheckCircle2,
   Search,
+  ExternalLink,
+  Wifi,
+  WifiOff,
+  Star,
+  Loader2,
   type LucideIcon,
 } from 'lucide-react'
+import { getListingsByTrade } from '../services/api'
+import { captureError } from '../utils/errorTracking'
+import type { ListingCard } from '../types/listing'
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://uktradeapps.co.uk'
 
@@ -230,13 +239,149 @@ function buildStructuredData(trade: TradeConfig) {
 }
 
 /* =========================================================================
+   Listing Card Component
+   ========================================================================= */
+
+function ListingCardItem({ listing, tradeSlug }: { listing: ListingCard; tradeSlug: string }) {
+  return (
+    <div className="card flex flex-col">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="font-display text-lg font-bold text-surface-900">
+              {listing.name}
+            </h3>
+            {listing.isVerified && (
+              <span className="badge-brand" title="Verified by UKTradeApps">
+                <CheckCircle2 className="mr-1 h-3 w-3" />
+                Verified
+              </span>
+            )}
+            {listing.isOwnProduct && (
+              <span className="badge-accent" title="Built by Autaimate">
+                <Star className="mr-1 h-3 w-3" />
+                Autaimate
+              </span>
+            )}
+          </div>
+          <p className="mt-1.5 text-sm text-surface-600 leading-relaxed">
+            {listing.tagline}
+          </p>
+        </div>
+      </div>
+
+      {/* Feature tags */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        {listing.ukPricingGbp && (
+          <span className="flex items-center gap-1 rounded-md bg-surface-100 px-2 py-1 text-2xs font-medium text-surface-700">
+            <PoundSterling className="h-3 w-3" />
+            UK pricing
+          </span>
+        )}
+        {listing.ukComplianceVerified && (
+          <span className="flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-2xs font-medium text-brand-700">
+            <Shield className="h-3 w-3" />
+            Compliance verified
+          </span>
+        )}
+        {listing.offlineCapable ? (
+          <span className="flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-1 text-2xs font-medium text-emerald-700">
+            <Wifi className="h-3 w-3" />
+            Works offline
+          </span>
+        ) : (
+          <span className="flex items-center gap-1 rounded-md bg-surface-100 px-2 py-1 text-2xs font-medium text-surface-500">
+            <WifiOff className="h-3 w-3" />
+            Online only
+          </span>
+        )}
+      </div>
+
+      {/* Pricing */}
+      <div className="mt-4 border-t border-surface-100 pt-4">
+        <div className="flex items-end justify-between">
+          <div>
+            {listing.hasFreeTier ? (
+              <p className="font-display text-lg font-bold text-emerald-600">Free</p>
+            ) : listing.priceFromMonthly ? (
+              <p className="font-display text-lg font-bold text-surface-900">
+                £{Number(listing.priceFromMonthly).toFixed(2)}
+                <span className="text-sm font-normal text-surface-500">/month</span>
+              </p>
+            ) : (
+              <p className="text-sm text-surface-500">Contact for pricing</p>
+            )}
+            {listing.hasFreeTrial && !listing.hasFreeTier && (
+              <p className="text-2xs text-surface-500">Free trial available</p>
+            )}
+          </div>
+
+          <Link
+            to={`/${tradeSlug}/${listing.slug}`}
+            className="btn-secondary text-sm"
+          >
+            View details
+            <ExternalLink className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </div>
+
+      {listing.lastVerifiedAt && (
+        <p className="mt-3 text-2xs text-surface-400">
+          Last verified: {new Date(listing.lastVerifiedAt).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          })}
+        </p>
+      )}
+    </div>
+  )
+}
+
+/* =========================================================================
    TradeCategoryPage Component
    ========================================================================= */
 
 export default function TradeCategoryPage() {
   const { tradeSlug } = useParams<{ tradeSlug: string }>()
+  const [listings, setListings] = useState<ListingCard[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const trade = tradeSlug ? TRADE_CONFIGS[tradeSlug] : undefined
+
+  useEffect(() => {
+    if (!tradeSlug || !trade) return
+
+    let cancelled = false
+
+    async function fetchListings() {
+      setIsLoading(true)
+      setError(null)
+      try {
+        const data = await getListingsByTrade(tradeSlug)
+        if (!cancelled) {
+          setListings(data)
+        }
+      } catch (err) {
+        if (!cancelled) {
+          captureError(err, 'TradeCategoryPage.fetchListings', { tradeSlug })
+          setError('Failed to load listings. Please try again.')
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    fetchListings()
+
+    return () => {
+      cancelled = true
+    }
+  }, [tradeSlug, trade])
 
   if (!trade) {
     return <Navigate to="/" replace />
@@ -381,19 +526,65 @@ export default function TradeCategoryPage() {
           </div>
         </section>
 
-        {/* Categories */}
-        <section className="section-spacing bg-surface-50" aria-labelledby="categories-heading">
+        {/* Listings */}
+        <section className="section-spacing bg-surface-50" aria-labelledby="listings-heading">
           <div className="container-app">
             <h2
-              id="categories-heading"
+              id="listings-heading"
               className="font-display text-2xl font-bold text-surface-900 sm:text-3xl"
             >
-              Browse {trade.name.toLowerCase()} software by category
+              {trade.name} software &mdash; {listings.length} app{listings.length !== 1 ? 's' : ''} reviewed
             </h2>
             <p className="mt-3 text-surface-600">
               Every app independently reviewed with UK compliance checks and
               real pricing in pounds.
             </p>
+
+            {isLoading && (
+              <div className="mt-12 flex items-center justify-center gap-3 text-surface-500">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Loading listings...
+              </div>
+            )}
+
+            {error && (
+              <div className="mt-12 rounded-lg border border-red-200 bg-red-50 px-6 py-4 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+
+            {!isLoading && !error && listings.length === 0 && (
+              <div className="mt-12 rounded-lg border border-surface-200 bg-white px-6 py-10 text-center text-surface-500">
+                No listings yet for {trade.name}. Check back soon or{' '}
+                <Link to="/submit" className="text-brand-600 font-medium hover:underline">
+                  submit your app
+                </Link>.
+              </div>
+            )}
+
+            {!isLoading && !error && listings.length > 0 && (
+              <div className="mt-10 grid gap-6 lg:grid-cols-2">
+                {listings.map((listing) => (
+                  <ListingCardItem
+                    key={listing.id}
+                    listing={listing}
+                    tradeSlug={trade.slug}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Categories */}
+        <section className="section-spacing bg-white" aria-labelledby="categories-heading">
+          <div className="container-app">
+            <h2
+              id="categories-heading"
+              className="font-display text-2xl font-bold text-surface-900 sm:text-3xl"
+            >
+              Browse by category
+            </h2>
 
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {trade.categories.map((category) => (
@@ -404,9 +595,6 @@ export default function TradeCategoryPage() {
                   <p className="mt-2 flex-1 text-sm text-surface-600 leading-relaxed">
                     {category.description}
                   </p>
-                  <div className="mt-4 rounded-lg border border-surface-200 bg-surface-50 px-4 py-3 text-center text-sm text-surface-500">
-                    Listings coming soon
-                  </div>
                 </div>
               ))}
             </div>
@@ -414,7 +602,7 @@ export default function TradeCategoryPage() {
         </section>
 
         {/* What we verify */}
-        <section className="section-spacing bg-white" aria-labelledby="verify-heading">
+        <section className="section-spacing bg-surface-50" aria-labelledby="verify-heading">
           <div className="container-app">
             <div className="mx-auto max-w-3xl">
               <h2
