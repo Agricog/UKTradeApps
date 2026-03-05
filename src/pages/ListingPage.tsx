@@ -367,7 +367,7 @@ export default function ListingPage() {
                     {listing.integrations.length > 0 && (
                       <div className="card">
                         <h2 className="font-display text-xl font-bold text-surface-900">
-                          <Link className="mr-2 inline-block h-5 w-5 text-brand-600" />
+                          <ArrowRight className="mr-2 inline-block h-5 w-5 text-brand-600" />
                           Integrations
                         </h2>
                         <div className="mt-4 flex flex-wrap gap-2">
