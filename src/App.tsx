@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import * as Sentry from '@sentry/react'
 import HomePage from './pages/HomePage'
+import TradeCategoryPage from './pages/TradeCategoryPage'
 import NotFoundPage from './pages/NotFoundPage'
 
-// Sentry-wrapped Routes for automatic transaction tracking
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes)
 
 export default function App() {
@@ -13,13 +13,11 @@ export default function App() {
         {/* Public pages */}
         <Route path="/" element={<HomePage />} />
 
-        {/* Trade category pages (Phase 2) */}
-        {/* <Route path="/electricians" element={<TradeCategoryPage />} /> */}
-        {/* <Route path="/builders" element={<TradeCategoryPage />} /> */}
-        {/* <Route path="/plumbers" element={<TradeCategoryPage />} /> */}
+        {/* Trade category pages */}
+        <Route path="/:tradeSlug" element={<TradeCategoryPage />} />
 
         {/* Individual listing page (Phase 3) */}
-        {/* <Route path="/:trade/:slug" element={<ListingPage />} /> */}
+        {/* <Route path="/:tradeSlug/:listingSlug" element={<ListingPage />} /> */}
 
         {/* Quiz (Phase 4) */}
         {/* <Route path="/quiz" element={<QuizPage />} /> */}
