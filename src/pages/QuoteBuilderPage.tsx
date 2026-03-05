@@ -69,8 +69,14 @@ interface LineItem {
   subtotal: number
 }
 
+interface RegionOption {
+  value: string
+  label: string
+  multiplier: number
+}
+
 /* =========================================================================
-   Pricing Data \u2014 UK 2025/26 Benchmarks
+   Pricing Data
    ========================================================================= */
 
 const JOB_TEMPLATES: JobTemplate[] = [
@@ -286,12 +292,6 @@ const JOB_TEMPLATES: JobTemplate[] = [
   },
 ]
 
-interface RegionOption {
-  value: string
-  label: string
-  multiplier: number
-}
-
 const REGIONS: RegionOption[] = [
   { value: 'london', label: 'London', multiplier: 1.35 },
   { value: 'south-east', label: 'South East', multiplier: 1.15 },
@@ -303,7 +303,7 @@ const REGIONS: RegionOption[] = [
   { value: 'northern-ireland', label: 'Northern Ireland', multiplier: 0.85 },
 ]
 
-const DEFAULT_REGION: RegionOption = REGIONS[2]
+const FALLBACK_REGION: RegionOption = { value: 'south-west', label: 'South West', multiplier: 1.0 }
 const BASE_HOURLY_RATE = 45
 
 /* =========================================================================
@@ -383,7 +383,7 @@ export default function QuoteBuilderPage() {
   const [showQuote, setShowQuote] = useState(false)
   const [quoteNumber] = useState(generateQuoteNumber)
 
-  const regionData: RegionOption = REGIONS.find((r) => r.value === region) ?? DEFAULT_REGION
+  const regionData: RegionOption = REGIONS.find((r) => r.value === region) ?? FALLBACK_REGION
   const effectiveHourlyRate: number = labourRateOverride
     ? Number(labourRateOverride)
     : BASE_HOURLY_RATE * regionData.multiplier
@@ -728,9 +728,7 @@ export default function QuoteBuilderPage() {
             <div className="grid gap-8 lg:grid-cols-3">
               <div className="lg:col-span-2 space-y-8">
                 <div className="card">
-                  <h2 className="font-display text-xl font-bold text-surface-900">
-                    Select jobs
-                  </h2>
+                  <h2 className="font-display text-xl font-bold text-surface-900">Select jobs</h2>
                   <p className="mt-1 text-sm text-surface-500">
                     Click to add jobs to your quote. Adjust quantities after adding.
                   </p>
@@ -771,40 +769,21 @@ export default function QuoteBuilderPage() {
 
                                   {isSelected ? (
                                     <div className="flex items-center gap-2">
-                                      <button
-                                        type="button"
-                                        onClick={() => updateQuantity(template.id, -1)}
-                                        className="flex h-8 w-8 items-center justify-center rounded-md border border-surface-300 bg-white text-surface-600 hover:bg-surface-50"
-                                        aria-label="Decrease quantity"
-                                      >
+                                      <button type="button" onClick={() => updateQuantity(template.id, -1)} className="flex h-8 w-8 items-center justify-center rounded-md border border-surface-300 bg-white text-surface-600 hover:bg-surface-50" aria-label="Decrease quantity">
                                         <Minus className="h-3.5 w-3.5" />
                                       </button>
                                       <span className="w-8 text-center font-medium text-surface-900">
                                         {selectedJob?.quantity}
                                       </span>
-                                      <button
-                                        type="button"
-                                        onClick={() => updateQuantity(template.id, 1)}
-                                        className="flex h-8 w-8 items-center justify-center rounded-md border border-surface-300 bg-white text-surface-600 hover:bg-surface-50"
-                                        aria-label="Increase quantity"
-                                      >
+                                      <button type="button" onClick={() => updateQuantity(template.id, 1)} className="flex h-8 w-8 items-center justify-center rounded-md border border-surface-300 bg-white text-surface-600 hover:bg-surface-50" aria-label="Increase quantity">
                                         <Plus className="h-3.5 w-3.5" />
                                       </button>
-                                      <button
-                                        type="button"
-                                        onClick={() => removeJob(template.id)}
-                                        className="flex h-8 w-8 items-center justify-center rounded-md text-red-500 hover:bg-red-50"
-                                        aria-label="Remove job"
-                                      >
+                                      <button type="button" onClick={() => removeJob(template.id)} className="flex h-8 w-8 items-center justify-center rounded-md text-red-500 hover:bg-red-50" aria-label="Remove job">
                                         <Trash2 className="h-3.5 w-3.5" />
                                       </button>
                                     </div>
                                   ) : (
-                                    <button
-                                      type="button"
-                                      onClick={() => addJob(template.id)}
-                                      className="flex h-8 items-center gap-1 rounded-md bg-brand-600 px-3 text-xs font-medium text-white hover:bg-brand-700"
-                                    >
+                                    <button type="button" onClick={() => addJob(template.id)} className="flex h-8 items-center gap-1 rounded-md bg-brand-600 px-3 text-xs font-medium text-white hover:bg-brand-700">
                                       <Plus className="h-3.5 w-3.5" />
                                       Add
                                     </button>
@@ -820,12 +799,8 @@ export default function QuoteBuilderPage() {
                 </div>
 
                 <div className="card">
-                  <h2 className="font-display text-xl font-bold text-surface-900">
-                    Your business details
-                  </h2>
-                  <p className="mt-1 text-sm text-surface-500">
-                    Appears on the quote header. Optional but recommended for a professional look.
-                  </p>
+                  <h2 className="font-display text-xl font-bold text-surface-900">Your business details</h2>
+                  <p className="mt-1 text-sm text-surface-500">Appears on the quote header. Optional but recommended for a professional look.</p>
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <input type="text" placeholder="Business name" value={businessDetails.businessName} onChange={(e) => setBusinessDetails({ ...businessDetails, businessName: e.target.value })} className="rounded-lg border border-surface-300 bg-white px-3 py-2 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20" />
                     <input type="text" placeholder="Contact name" value={businessDetails.contactName} onChange={(e) => setBusinessDetails({ ...businessDetails, contactName: e.target.value })} className="rounded-lg border border-surface-300 bg-white px-3 py-2 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20" />
@@ -838,9 +813,7 @@ export default function QuoteBuilderPage() {
                 </div>
 
                 <div className="card">
-                  <h2 className="font-display text-xl font-bold text-surface-900">
-                    Client details
-                  </h2>
+                  <h2 className="font-display text-xl font-bold text-surface-900">Client details</h2>
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <input type="text" placeholder="Client name" value={clientDetails.name} onChange={(e) => setClientDetails({ ...clientDetails, name: e.target.value })} className="rounded-lg border border-surface-300 bg-white px-3 py-2 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20" />
                     <input type="tel" placeholder="Client phone" value={clientDetails.phone} onChange={(e) => setClientDetails({ ...clientDetails, phone: e.target.value })} className="rounded-lg border border-surface-300 bg-white px-3 py-2 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20" />
@@ -852,21 +825,11 @@ export default function QuoteBuilderPage() {
 
               <div className="space-y-6">
                 <div className="card">
-                  <h2 className="font-display text-lg font-bold text-surface-900">
-                    Pricing settings
-                  </h2>
-
+                  <h2 className="font-display text-lg font-bold text-surface-900">Pricing settings</h2>
                   <div className="mt-4 space-y-4">
                     <div>
-                      <label htmlFor="region" className="block text-sm font-medium text-surface-700">
-                        Region
-                      </label>
-                      <select
-                        id="region"
-                        value={region}
-                        onChange={(e) => setRegion(e.target.value)}
-                        className="mt-1 w-full rounded-lg border border-surface-300 bg-white px-3 py-2 text-sm text-surface-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
-                      >
+                      <label htmlFor="region" className="block text-sm font-medium text-surface-700">Region</label>
+                      <select id="region" value={region} onChange={(e) => setRegion(e.target.value)} className="mt-1 w-full rounded-lg border border-surface-300 bg-white px-3 py-2 text-sm text-surface-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20">
                         {REGIONS.map((r) => (
                           <option key={r.value} value={r.value}>
                             {r.label} ({'\u00d7'}{r.multiplier.toFixed(2)})
@@ -874,94 +837,43 @@ export default function QuoteBuilderPage() {
                         ))}
                       </select>
                     </div>
-
                     <div>
-                      <label htmlFor="hourly-rate" className="block text-sm font-medium text-surface-700">
-                        Hourly rate override
-                      </label>
+                      <label htmlFor="hourly-rate" className="block text-sm font-medium text-surface-700">Hourly rate override</label>
                       <div className="relative mt-1">
                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-surface-400">{'\u00a3'}</span>
-                        <input
-                          id="hourly-rate"
-                          type="number"
-                          min="20"
-                          max="150"
-                          step="1"
-                          value={labourRateOverride}
-                          onChange={(e) => setLabourRateOverride(e.target.value)}
-                          placeholder={effectiveHourlyRate.toFixed(0)}
-                          className="w-full rounded-lg border border-surface-300 bg-white py-2 pl-7 pr-3 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
-                        />
+                        <input id="hourly-rate" type="number" min="20" max="150" step="1" value={labourRateOverride} onChange={(e) => setLabourRateOverride(e.target.value)} placeholder={effectiveHourlyRate.toFixed(0)} className="w-full rounded-lg border border-surface-300 bg-white py-2 pl-7 pr-3 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20" />
                       </div>
                       <p className="mt-1 text-2xs text-surface-400">
                         Leave blank to use regional average ({'\u00a3'}{(BASE_HOURLY_RATE * regionData.multiplier).toFixed(0)}/h)
                       </p>
                     </div>
-
                     <div>
-                      <label htmlFor="validity" className="block text-sm font-medium text-surface-700">
-                        Quote valid for (days)
-                      </label>
-                      <input
-                        id="validity"
-                        type="number"
-                        min="7"
-                        max="90"
-                        value={validityDays}
-                        onChange={(e) => setValidityDays(Number(e.target.value) || 30)}
-                        className="mt-1 w-full rounded-lg border border-surface-300 bg-white px-3 py-2 text-sm text-surface-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
-                      />
+                      <label htmlFor="validity" className="block text-sm font-medium text-surface-700">Quote valid for (days)</label>
+                      <input id="validity" type="number" min="7" max="90" value={validityDays} onChange={(e) => setValidityDays(Number(e.target.value) || 30)} className="mt-1 w-full rounded-lg border border-surface-300 bg-white px-3 py-2 text-sm text-surface-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20" />
                     </div>
-
                     <div className="flex items-center gap-3">
-                      <input
-                        id="vat"
-                        type="checkbox"
-                        checked={vatRegistered}
-                        onChange={(e) => setVatRegistered(e.target.checked)}
-                        className="h-4 w-4 rounded border-surface-300 text-brand-600 focus:ring-brand-500"
-                      />
-                      <label htmlFor="vat" className="text-sm text-surface-700">
-                        VAT registered (add 20%)
-                      </label>
+                      <input id="vat" type="checkbox" checked={vatRegistered} onChange={(e) => setVatRegistered(e.target.checked)} className="h-4 w-4 rounded border-surface-300 text-brand-600 focus:ring-brand-500" />
+                      <label htmlFor="vat" className="text-sm text-surface-700">VAT registered (add 20%)</label>
                     </div>
-
                     <div className="flex items-center gap-3">
-                      <input
-                        id="cis"
-                        type="checkbox"
-                        checked={cisDeduction}
-                        onChange={(e) => setCisDeduction(e.target.checked)}
-                        className="h-4 w-4 rounded border-surface-300 text-brand-600 focus:ring-brand-500"
-                      />
-                      <label htmlFor="cis" className="text-sm text-surface-700">
-                        CIS deduction (20% of labour)
-                      </label>
+                      <input id="cis" type="checkbox" checked={cisDeduction} onChange={(e) => setCisDeduction(e.target.checked)} className="h-4 w-4 rounded border-surface-300 text-brand-600 focus:ring-brand-500" />
+                      <label htmlFor="cis" className="text-sm text-surface-700">CIS deduction (20% of labour)</label>
                     </div>
                   </div>
                 </div>
 
                 <div className="card border-brand-200 bg-brand-50">
-                  <h2 className="font-display text-lg font-bold text-brand-900">
-                    Quote summary
-                  </h2>
-
+                  <h2 className="font-display text-lg font-bold text-brand-900">Quote summary</h2>
                   {selectedJobs.length === 0 ? (
-                    <p className="mt-3 text-sm text-brand-700">
-                      Add jobs from the left to see your quote total.
-                    </p>
+                    <p className="mt-3 text-sm text-brand-700">Add jobs from the left to see your quote total.</p>
                   ) : (
                     <div className="mt-3 space-y-2 text-sm">
                       {lineItems.map((item: LineItem) => (
                         <div key={item.template.id} className="flex justify-between text-brand-800">
-                          <span>
-                            {item.template.name}
-                            {item.quantity > 1 ? ` \u00d7${item.quantity}` : ''}
-                          </span>
+                          <span>{item.template.name}{item.quantity > 1 ? ` \u00d7${item.quantity}` : ''}</span>
                           <span className="font-medium">{formatGBP(item.subtotal)}</span>
                         </div>
                       ))}
-
                       <div className="border-t border-brand-200 pt-2">
                         <div className="flex justify-between text-brand-800">
                           <span>Subtotal</span>
@@ -980,36 +892,25 @@ export default function QuoteBuilderPage() {
                           </div>
                         )}
                       </div>
-
                       <div className="border-t-2 border-brand-600 pt-2">
                         <div className="flex justify-between font-display text-xl font-bold text-brand-900">
                           <span>Total</span>
                           <span>{formatGBP(grandTotal)}</span>
                         </div>
-                        <p className="mt-1 text-2xs text-brand-600">
-                          {totalLabourHours.toFixed(1)} hours estimated labour
-                        </p>
+                        <p className="mt-1 text-2xs text-brand-600">{totalLabourHours.toFixed(1)} hours estimated labour</p>
                       </div>
                     </div>
                   )}
-
                   {hasNotifiableWork && (
                     <div className="mt-4 flex items-start gap-2 rounded-md bg-amber-100 px-3 py-2 text-xs text-amber-800">
                       <AlertTriangle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
                       <span>Includes Part P notifiable work</span>
                     </div>
                   )}
-
-                  <button
-                    type="button"
-                    onClick={handleGenerateQuote}
-                    disabled={selectedJobs.length === 0}
-                    className="btn-primary mt-6 w-full justify-center disabled:cursor-not-allowed disabled:opacity-50"
-                  >
+                  <button type="button" onClick={handleGenerateQuote} disabled={selectedJobs.length === 0} className="btn-primary mt-6 w-full justify-center disabled:cursor-not-allowed disabled:opacity-50">
                     Generate quote
                     <ArrowRight className="h-4 w-4" />
                   </button>
-
                   <p className="mt-3 flex items-center gap-1.5 text-2xs text-brand-600">
                     <Info className="h-3 w-3 flex-shrink-0" />
                     Prices are UK regional averages. Adjust to match your rates.
@@ -1017,12 +918,8 @@ export default function QuoteBuilderPage() {
                 </div>
 
                 <div className="card">
-                  <h2 className="font-display text-lg font-bold text-surface-900">
-                    Need quoting software?
-                  </h2>
-                  <p className="mt-2 text-sm text-surface-600">
-                    Compare the best quoting and estimating tools for UK electricians in our directory.
-                  </p>
+                  <h2 className="font-display text-lg font-bold text-surface-900">Need quoting software?</h2>
+                  <p className="mt-2 text-sm text-surface-600">Compare the best quoting and estimating tools for UK electricians in our directory.</p>
                   <Link to="/electricians" className="btn-secondary mt-4 w-full justify-center text-sm">
                     <CheckCircle2 className="h-4 w-4" />
                     Browse electrician apps
