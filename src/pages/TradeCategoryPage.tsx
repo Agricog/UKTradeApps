@@ -360,7 +360,7 @@ export default function TradeCategoryPage() {
       setIsLoading(true)
       setError(null)
       try {
-        const data = await getListingsByTrade(tradeSlug)
+        const data = await getListingsByTrade(tradeSlug as string)
         if (!cancelled) {
           setListings(data)
         }
