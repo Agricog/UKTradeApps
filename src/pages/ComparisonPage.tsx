@@ -3,7 +3,6 @@ import { Link, useParams, Navigate } from 'react-router-dom'
 import { useState } from 'react'
 import {
   ArrowRight,
-  ArrowLeft,
   Shield,
   CheckCircle2,
   HelpCircle,
