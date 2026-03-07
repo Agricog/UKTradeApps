@@ -8,6 +8,7 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
+  ExternalLink,
 } from 'lucide-react'
 import { SEO_PAGES, type SeoPageData } from '../data/seoPages'
 import NewsletterSignup from '../components/NewsletterSignup'
@@ -46,29 +47,31 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 }
 
 /* =========================================================================
-   Structured Data Builder
+   Structured Data Builder \u2014 All 8 JSON-LD Schemas
    ========================================================================= */
 
 function buildStructuredData(page: SeoPageData) {
   return {
     '@context': 'https://schema.org',
     '@graph': [
+      // 1. WebPage with Speakable
       {
         '@type': 'WebPage',
-        '@id': `${APP_URL}/${page.slug}/#webpage`,
-        url: `${APP_URL}/${page.slug}`,
+        '@id': `${APP_URL}/guides/${page.slug}/#webpage`,
+        url: `${APP_URL}/guides/${page.slug}`,
         name: page.title,
         description: page.metaDescription,
         isPartOf: { '@id': `${APP_URL}/#website` },
-        breadcrumb: { '@id': `${APP_URL}/${page.slug}/#breadcrumb` },
+        breadcrumb: { '@id': `${APP_URL}/guides/${page.slug}/#breadcrumb` },
         speakable: {
           '@type': 'SpeakableSpecification',
           cssSelector: ['#quick-answer'],
         },
       },
+      // 2. BreadcrumbList
       {
         '@type': 'BreadcrumbList',
-        '@id': `${APP_URL}/${page.slug}/#breadcrumb`,
+        '@id': `${APP_URL}/guides/${page.slug}/#breadcrumb`,
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: APP_URL },
           {
@@ -81,10 +84,11 @@ function buildStructuredData(page: SeoPageData) {
             '@type': 'ListItem',
             position: 3,
             name: page.breadcrumbLabel,
-            item: `${APP_URL}/${page.slug}`,
+            item: `${APP_URL}/guides/${page.slug}`,
           },
         ],
       },
+      // 3. FAQPage
       {
         '@type': 'FAQPage',
         mainEntity: page.faqs.map((faq) => ({
@@ -93,6 +97,7 @@ function buildStructuredData(page: SeoPageData) {
           acceptedAnswer: { '@type': 'Answer', text: faq.answer },
         })),
       },
+      // 4. Article
       {
         '@type': 'Article',
         headline: page.h1,
@@ -106,9 +111,66 @@ function buildStructuredData(page: SeoPageData) {
           '@type': 'Organization',
           name: 'Autaimate',
           url: APP_URL,
+          logo: { '@type': 'ImageObject', url: `${APP_URL}/og-uktradeapps.jpg` },
         },
         datePublished: '2026-03-05',
-        dateModified: '2026-03-05',
+        dateModified: '2026-03-07',
+        image: `${APP_URL}/og-uktradeapps.jpg`,
+      },
+      // 5. Organization
+      {
+        '@type': 'Organization',
+        '@id': `${APP_URL}/#organization`,
+        name: 'UKTradeApps',
+        url: APP_URL,
+        logo: `${APP_URL}/og-uktradeapps.jpg`,
+        description: "Built by tradespeople with 40+ years experience. The UK's trusted app directory for trades.",
+      },
+      // 6. SoftwareApplication
+      {
+        '@type': 'SoftwareApplication',
+        name: 'UKTradeApps Directory',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        description: 'Free directory and quiz tool to help UK tradespeople find the best software for their business.',
+      },
+      // 7. HowTo
+      {
+        '@type': 'HowTo',
+        name: `How to Choose the Best ${page.breadcrumbLabel} for Your Business`,
+        description: `Use UKTradeApps to compare ${page.breadcrumbLabel.toLowerCase()} options and find the right fit for your ${page.tradeCategory.toLowerCase()} business.`,
+        step: [
+          {
+            '@type': 'HowToStep',
+            position: 1,
+            name: 'Read our independent comparison',
+            text: `Review our detailed guide comparing every ${page.breadcrumbLabel.toLowerCase()} option available to UK ${page.tradeCategory.toLowerCase()}.`,
+          },
+          {
+            '@type': 'HowToStep',
+            position: 2,
+            name: 'Take the quiz for personalised recommendations',
+            text: 'Answer 4 quick questions about your trade, team size, budget and pain points to get a tailored recommendation.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 3,
+            name: 'Compare and choose',
+            text: 'Use our directory to compare features, pricing, and compliance details side by side before making your decision.',
+          },
+        ],
+      },
+      // 8. DefinedTermSet
+      {
+        '@type': 'DefinedTermSet',
+        name: `${page.tradeCategory} Software Terms`,
+        description: `Key terms related to ${page.breadcrumbLabel.toLowerCase()} for UK ${page.tradeCategory.toLowerCase()}.`,
+        hasDefinedTerm: (page.definedTerms || []).map((term) => ({
+          '@type': 'DefinedTerm',
+          name: term.name,
+          description: term.description,
+        })),
       },
     ],
   }
@@ -134,7 +196,7 @@ export default function ComparisonPage() {
       <Helmet>
         <title>{page.title}</title>
         <meta name="description" content={page.metaDescription} />
-        <link rel="canonical" href={`${APP_URL}/${page.slug}`} />
+        <link rel="canonical" href={`${APP_URL}/guides/${page.slug}`} />
         <meta
           name="robots"
           content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
@@ -145,7 +207,7 @@ export default function ComparisonPage() {
         <meta property="og:image" content={`${APP_URL}/og-uktradeapps.jpg`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:url" content={`${APP_URL}/${page.slug}`} />
+        <meta property="og:url" content={`${APP_URL}/guides/${page.slug}`} />
         <meta property="og:type" content="article" />
         <meta property="og:locale" content="en_GB" />
 
@@ -276,6 +338,19 @@ export default function ComparisonPage() {
           </div>
         </section>
 
+        {/* Affiliate disclosure */}
+        <section className="bg-surface-50 border-b border-surface-200">
+          <div className="container-app py-3">
+            <p className="text-center text-2xs text-surface-400">
+              Some links on this page are affiliate links. We may earn a commission if you sign up.
+              This never affects our reviews or recommendations.{' '}
+              <Link to="/about" className="underline hover:text-surface-600">
+                Learn more
+              </Link>
+            </p>
+          </div>
+        </section>
+
         {/* Main content */}
         <section className="section-spacing bg-surface-50">
           <div className="container-app">
@@ -320,21 +395,51 @@ export default function ComparisonPage() {
                 </div>
               ))}
 
+              {/* External authority links */}
+              {page.externalLinks && page.externalLinks.length > 0 && (
+                <div className="mt-12 rounded-xl border border-surface-200 bg-white px-6 py-5">
+                  <h3 className="font-display text-lg font-bold text-surface-900">
+                    Official resources & standards
+                  </h3>
+                  <p className="mt-1 text-sm text-surface-500">
+                    Authoritative external sources referenced in this guide.
+                  </p>
+                  <div className="mt-3 flex flex-col gap-2">
+                    {page.externalLinks.map((link) => (
+                      <a
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-sm font-medium text-brand-700 hover:text-brand-900 hover:underline"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Internal links */}
-              <div className="mt-12 rounded-xl border border-brand-200 bg-brand-50 px-6 py-5">
+              <div className="mt-6 rounded-xl border border-brand-200 bg-brand-50 px-6 py-5">
                 <h3 className="font-display text-lg font-bold text-brand-900">
                   Related guides
                 </h3>
                 <div className="mt-3 flex flex-col gap-2">
-                  {page.relatedPages.map((link) => (
-                    <Link
-                      key={link.slug}
-                      to={`/${link.slug}`}
-                      className="text-sm font-medium text-brand-700 hover:text-brand-900 hover:underline"
-                    >
-                      {link.label} &rarr;
-                    </Link>
-                  ))}
+                  {page.relatedPages.map((link) => {
+                    const isGuide = link.slug.includes('-') && !['electricians', 'builders', 'plumbers', 'quiz', 'quote', 'submit'].includes(link.slug)
+                    const href = isGuide ? `/guides/${link.slug}` : `/${link.slug}`
+                    return (
+                      <Link
+                        key={link.slug}
+                        to={href}
+                        className="text-sm font-medium text-brand-700 hover:text-brand-900 hover:underline"
+                      >
+                        {link.label} &rarr;
+                      </Link>
+                    )
+                  })}
                 </div>
               </div>
             </div>
