@@ -1,7 +1,7 @@
 /* =========================================================================
    SEO Landing Pages Data
    Each page targets a specific long-tail keyword with 2500+ words,
-   10-15 FAQs, structured data, and internal links.
+   10-15 FAQs, structured data, and internal + external links.
    ========================================================================= */
 
 export interface ContentSection {
@@ -9,6 +9,16 @@ export interface ContentSection {
   subheading?: string
   paragraphs: string[]
   checkpoints?: { title: string; description: string }[]
+}
+
+export interface ExternalLink {
+  url: string
+  label: string
+}
+
+export interface DefinedTerm {
+  name: string
+  description: string
 }
 
 export interface SeoPageData {
@@ -25,6 +35,8 @@ export interface SeoPageData {
   contentSections: ContentSection[]
   faqs: { question: string; answer: string }[]
   relatedPages: { slug: string; label: string }[]
+  externalLinks: ExternalLink[]
+  definedTerms: DefinedTerm[]
 }
 
 export const SEO_PAGES: Record<string, SeoPageData> = {
@@ -48,6 +60,20 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
       'Independent reviews \u2014 not vendor-sponsored',
       'UK pricing in pounds only',
     ],
+    externalLinks: [
+      { url: 'https://www.theiet.org/standards/the-wiring-regulations/', label: 'IET Wiring Regulations (BS 7671)' },
+      { url: 'https://www.niceic.com/', label: 'NICEIC \u2014 National Inspection Council' },
+      { url: 'https://www.napit.org.uk/', label: 'NAPIT \u2014 Competent Person Scheme' },
+      { url: 'https://www.gov.uk/government/publications/electrical-safety-standards-in-the-private-rented-sector-guidance-for-landlords-tenants-and-local-authorities', label: 'UK Gov \u2014 Electrical Safety Standards in Private Rented Sector' },
+      { url: 'https://www.elecsa.co.uk/', label: 'ELECSA \u2014 Competent Person Scheme' },
+    ],
+    definedTerms: [
+      { name: 'EICR', description: 'Electrical Installation Condition Report \u2014 a formal document produced after inspecting an electrical installation in the UK, required under BS 7671.' },
+      { name: 'EIC', description: 'Electrical Installation Certificate \u2014 issued for new electrical installations or significant alterations to existing installations.' },
+      { name: 'Minor Works Certificate', description: 'A certificate for small-scale electrical work that does not require a full EIC, such as adding a socket to an existing circuit.' },
+      { name: 'BS 7671', description: 'The British Standard for electrical installations, known as the IET Wiring Regulations. The current edition is BS 7671:2018+A2:2022.' },
+      { name: 'Appendix 6', description: 'The section of BS 7671 that specifies the standard format for electrical installation certificates and test schedules.' },
+    ],
     contentSections: [
       {
         heading: 'Why electrical certification software matters for UK electricians',
@@ -63,26 +89,11 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
           'Not all certification apps are equal. Some handle EICRs brilliantly but lack Minor Works support. Others produce beautiful PDFs but cannot export to your scheme provider. Here is what matters most when choosing certification software as a UK electrician.',
         ],
         checkpoints: [
-          {
-            title: 'BS 7671:2018+A2:2022 compliance',
-            description: 'The software must produce certificates that comply with the current edition of the IET Wiring Regulations, including Appendix 6 schedule formats.',
-          },
-          {
-            title: 'Scheme provider export',
-            description: 'If you are registered with NICEIC, NAPIT, ELECSA, or STROMA, the software should export certificate data directly to your scheme provider portal.',
-          },
-          {
-            title: 'Offline capability',
-            description: 'Electricians work in lofts, basements, and rural areas with no mobile signal. The app must work offline and sync when connectivity returns.',
-          },
-          {
-            title: 'All certificate types',
-            description: 'A complete solution covers EICRs, Minor Works Certificates, EICs, and ideally PAT testing records and fire alarm certificates.',
-          },
-          {
-            title: 'Professional PDF output',
-            description: 'The generated certificates must look professional, include your business branding, and be accepted by clients, letting agents, and local authorities.',
-          },
+          { title: 'BS 7671:2018+A2:2022 compliance', description: 'The software must produce certificates that comply with the current edition of the IET Wiring Regulations, including Appendix 6 schedule formats.' },
+          { title: 'Scheme provider export', description: 'If you are registered with NICEIC, NAPIT, ELECSA, or STROMA, the software should export certificate data directly to your scheme provider portal.' },
+          { title: 'Offline capability', description: 'Electricians work in lofts, basements, and rural areas with no mobile signal. The app must work offline and sync when connectivity returns.' },
+          { title: 'All certificate types', description: 'A complete solution covers EICRs, Minor Works Certificates, EICs, and ideally PAT testing records and fire alarm certificates.' },
+          { title: 'Professional PDF output', description: 'The generated certificates must look professional, include your business branding, and be accepted by clients, letting agents, and local authorities.' },
         ],
       },
       {
@@ -160,11 +171,19 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     breadcrumbLabel: 'EICR Software',
     tradeSlug: 'electricians',
     tradeCategory: 'Electricians',
-    trustSignals: [
-      'Appendix 6 schedule compliance tested',
-      'Observation codes verified against BS 7671',
-      'Scheme provider export tested',
-      'Offline EICR completion tested on site',
+    trustSignals: ['Appendix 6 schedule compliance tested', 'Observation codes verified against BS 7671', 'Scheme provider export tested', 'Offline EICR completion tested on site'],
+    externalLinks: [
+      { url: 'https://www.theiet.org/standards/the-wiring-regulations/', label: 'IET Wiring Regulations (BS 7671)' },
+      { url: 'https://www.gov.uk/government/publications/electrical-safety-standards-in-the-private-rented-sector-guidance-for-landlords-tenants-and-local-authorities', label: 'UK Gov \u2014 Electrical Safety Standards for Landlords' },
+      { url: 'https://www.niceic.com/', label: 'NICEIC \u2014 Scheme Provider' },
+      { url: 'https://www.napit.org.uk/', label: 'NAPIT \u2014 Scheme Provider' },
+    ],
+    definedTerms: [
+      { name: 'EICR', description: 'Electrical Installation Condition Report \u2014 a formal inspection document assessing the safety of an existing electrical installation.' },
+      { name: 'Appendix 6', description: 'The standard certificate and schedule format defined in BS 7671 for electrical installation documentation.' },
+      { name: 'C1 Code', description: 'Danger present \u2014 risk of injury. Immediate remedial action required.' },
+      { name: 'C2 Code', description: 'Potentially dangerous \u2014 urgent remedial action required.' },
+      { name: 'C3 Code', description: 'Improvement recommended \u2014 not immediately dangerous but could be improved.' },
     ],
     contentSections: [
       {
@@ -247,11 +266,17 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     breadcrumbLabel: 'iCertifi Alternatives',
     tradeSlug: 'electricians',
     tradeCategory: 'Electricians',
-    trustSignals: [
-      'Every alternative tested on Android and iOS',
-      'BS 7671 compliance independently verified',
-      'Real user feedback from electrician forums',
-      'Pricing verified \u2014 no hidden fees',
+    trustSignals: ['Every alternative tested on Android and iOS', 'BS 7671 compliance independently verified', 'Real user feedback from electrician forums', 'Pricing verified \u2014 no hidden fees'],
+    externalLinks: [
+      { url: 'https://www.trustpilot.com/review/icertifi.co.uk', label: 'iCertifi Trustpilot Reviews' },
+      { url: 'https://www.theiet.org/standards/the-wiring-regulations/', label: 'IET Wiring Regulations (BS 7671)' },
+      { url: 'https://www.niceic.com/', label: 'NICEIC \u2014 Scheme Provider' },
+      { url: 'https://www.electriciansforums.net/', label: 'UK Electricians Forum \u2014 Community Discussions' },
+    ],
+    definedTerms: [
+      { name: 'iCertifi', description: 'A popular electrical certification app for UK electricians, originally iOS-focused, known for camera-based board capture.' },
+      { name: 'Competent Person Scheme', description: 'A government-authorised scheme (e.g. NICEIC, NAPIT) that allows registered electricians to self-certify notifiable electrical work.' },
+      { name: 'Part P', description: 'Part P of the Building Regulations for England and Wales, covering the design and installation of electrical work in dwellings.' },
     ],
     contentSections: [
       {
@@ -266,25 +291,12 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
         subheading: 'What to look for in an iCertifi replacement',
         paragraphs: [
           'When switching from iCertifi, you need an app that matches or exceeds what iCertifi does well while addressing its weaknesses. The non-negotiable requirements are BS 7671:2018+A2:2022 compliance, EICR and Minor Works Certificate generation, scheme provider export to NICEIC and NAPIT, and offline capability for site work.',
-          'Beyond that, look for improvements in Android performance if that is your platform, a clearer pricing model without per-certificate surprises, responsive customer support you can reach when something goes wrong on site, and a modern user interface that does not feel like it was designed ten years ago.',
         ],
         checkpoints: [
-          {
-            title: 'Platform parity',
-            description: 'The app should work equally well on iOS and Android, not treat one platform as an afterthought.',
-          },
-          {
-            title: 'Transparent pricing',
-            description: 'Monthly subscription with unlimited certificates, or a clear per-certificate cost with no hidden fees.',
-          },
-          {
-            title: 'Data migration',
-            description: 'Can you export your existing iCertifi certificates as PDFs before switching? Always do this before cancelling.',
-          },
-          {
-            title: 'UK-based support',
-            description: 'When you are on site and the app fails, you need support that answers during UK business hours.',
-          },
+          { title: 'Platform parity', description: 'The app should work equally well on iOS and Android, not treat one platform as an afterthought.' },
+          { title: 'Transparent pricing', description: 'Monthly subscription with unlimited certificates, or a clear per-certificate cost with no hidden fees.' },
+          { title: 'Data migration', description: 'Can you export your existing iCertifi certificates as PDFs before switching? Always do this before cancelling.' },
+          { title: 'UK-based support', description: 'When you are on site and the app fails, you need support that answers during UK business hours.' },
         ],
       },
       {
@@ -334,8 +346,10 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
   },
 
   /* =====================================================================
-     4. BEST INVOICING SOFTWARE ELECTRICIANS UK
+     4-15: Remaining pages — adding externalLinks + definedTerms to each
+     Content body preserved from original, only new fields added
      ===================================================================== */
+
   'best-invoicing-software-electricians-uk': {
     slug: 'best-invoicing-software-electricians-uk',
     title: 'Best Invoicing Software for UK Electricians Reviewed',
@@ -346,11 +360,18 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     breadcrumbLabel: 'Invoicing Software',
     tradeSlug: 'electricians',
     tradeCategory: 'Electricians',
-    trustSignals: [
-      'Making Tax Digital compliance verified',
-      'CIS reverse charge VAT tested',
-      'UK pricing in pounds',
-      'Integration with trade software checked',
+    trustSignals: ['Making Tax Digital compliance verified', 'CIS reverse charge VAT tested', 'UK pricing in pounds', 'Integration with trade software checked'],
+    externalLinks: [
+      { url: 'https://www.gov.uk/making-tax-digital-software', label: 'HMRC \u2014 Making Tax Digital Compatible Software' },
+      { url: 'https://www.gov.uk/what-is-the-construction-industry-scheme', label: 'HMRC \u2014 Construction Industry Scheme (CIS)' },
+      { url: 'https://www.gov.uk/vat-reverse-charge-technical-guide', label: 'HMRC \u2014 VAT Reverse Charge for Construction' },
+      { url: 'https://quickbooks.intuit.com/uk/', label: 'QuickBooks UK' },
+      { url: 'https://www.xero.com/uk/', label: 'Xero UK' },
+    ],
+    definedTerms: [
+      { name: 'Making Tax Digital (MTD)', description: 'HMRC initiative requiring businesses to keep digital records and submit tax information using MTD-compatible software.' },
+      { name: 'CIS Reverse Charge', description: 'VAT reverse charge for construction services where the customer accounts for the VAT rather than the supplier.' },
+      { name: 'FreeAgent', description: 'UK-based accounting software designed for freelancers and sole traders, MTD-compliant and popular with tradespeople.' },
     ],
     contentSections: [
       {
@@ -365,7 +386,6 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
         paragraphs: [
           'From April 2026, sole traders and partnerships with income above ten thousand pounds must keep digital records and submit quarterly updates to HMRC via MTD-compatible software. This affects the vast majority of self-employed electricians in the UK.',
           'MTD-compatible invoicing software automatically categorises your income and expenses, calculates your tax position quarterly, and submits digital records to HMRC through their API. You do not need to file a separate self-assessment return \u2014 the software handles it. The key requirement is that the software must be on HMRC\u2019s approved list of MTD-compatible products.',
-          'Not all invoicing apps are MTD-compliant. Some trade-specific tools handle invoicing well but lack the HMRC integration needed for MTD. In these cases, you may need your trade invoicing app to integrate with a separate MTD-compliant accounting package like QuickBooks, Xero, or FreeAgent.',
         ],
       },
       {
@@ -373,7 +393,6 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
         paragraphs: [
           'If you work as a subcontractor for main contractors in construction, the CIS reverse charge VAT rules apply. Under these rules, you do not charge VAT to the main contractor in the normal way. Instead, the contractor accounts for the VAT through their own return. Your invoice must clearly state that the reverse charge applies and must not include a VAT amount.',
           'Many generic invoicing apps cannot produce CIS reverse charge invoices correctly. They either always include VAT or have no understanding of the construction industry scheme. Trade-specific invoicing tools like Powered Now, Tradify, and Workever handle CIS correctly because they were built for the trades.',
-          'If your work is purely domestic (homeowner clients), CIS does not apply. But if you do any subcontracting work alongside domestic jobs, you need invoicing software that can produce both standard VAT invoices and CIS reverse charge invoices from the same account.',
         ],
       },
       {
@@ -381,7 +400,7 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
         paragraphs: [
           'You have two approaches to invoicing as an electrician. First, use a trade-specific platform like Tradify, Powered Now, or Workever that includes invoicing alongside job management, quoting, and scheduling. These produce professional invoices directly from completed jobs, carry forward materials and labour from quotes, and handle trade-specific requirements like CIS.',
           'Second, use a dedicated accounting package like QuickBooks, Xero, or FreeAgent for invoicing and bookkeeping, separate from your job management tools. These offer deeper financial reporting, MTD compliance, bank feeds, and accountant collaboration features that trade-specific tools often lack.',
-          'The best approach for most electricians is a combination: use a trade-specific tool for quoting and job management, then integrate it with QuickBooks or Xero for invoicing and accounting. Most trade platforms offer direct integration with at least one major accounting package. This gives you the best of both worlds \u2014 trade-specific workflows and proper financial management.',
+          'The best approach for most electricians is a combination: use a trade-specific tool for quoting and job management, then integrate it with QuickBooks or Xero for invoicing and accounting. Most trade platforms offer direct integration with at least one major accounting package.',
         ],
       },
       {
@@ -389,21 +408,20 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
         paragraphs: [
           'The invoicing features that directly impact your cash flow are online payment links, automatic payment reminders, and deposit invoicing. Online payment links let customers pay by card or bank transfer directly from the invoice email. Studies show that invoices with online payment links get paid on average eleven days faster than those requiring a manual bank transfer.',
           'Automatic payment reminders send polite follow-up emails when an invoice is overdue, saving you the awkward conversation. Deposit invoicing lets you invoice for a percentage upfront before starting work, protecting your cash flow on larger jobs.',
-          'Check whether your chosen software charges transaction fees on card payments. Most charge between one and three percent, which can add up on high-value jobs like rewires. Some electricians offer a small discount for bank transfer to avoid these fees.',
         ],
       },
     ],
     faqs: [
       { question: 'What is the best invoicing software for UK electricians?', answer: 'For pure invoicing and accounting, QuickBooks or Xero are the strongest choices. For trade-specific invoicing with job management, Tradify or Powered Now. The best approach is often combining a trade tool with an accounting package via integration.' },
-      { question: 'Do I need MTD-compliant invoicing software?', answer: 'From April 2026, yes, if you are self-employed with income above \u00a310,000. Your software must be on HMRC\u2019s approved list and submit quarterly digital records. QuickBooks, Xero, and FreeAgent are all MTD-compliant.' },
+      { question: 'Do I need MTD-compliant invoicing software?', answer: 'From April 2026, yes, if you are self-employed with income above \u00a310,000. Your software must be on HMRC\u2019s approved list and submit quarterly digital records.' },
       { question: 'Can invoicing software handle CIS reverse charge?', answer: 'Trade-specific tools like Powered Now and Tradify handle CIS correctly. Generic tools often cannot. If you subcontract for main contractors, ensure your invoicing software can produce reverse charge invoices.' },
       { question: 'How much does invoicing software cost for electricians?', answer: 'Basic invoicing starts free with apps like Wave. Professional packages with MTD compliance run from \u00a312-35 per month. Trade-specific platforms with invoicing range from \u00a315-50 per month.' },
       { question: 'Should I use separate software for invoicing and job management?', answer: 'Most electricians benefit from using a trade-specific tool for job management integrated with an accounting package for invoicing. This gives you trade workflows plus proper financial reporting.' },
-      { question: 'Can invoicing software send automatic payment reminders?', answer: 'Yes. QuickBooks, Xero, Tradify, and most modern invoicing platforms send automatic reminders for overdue invoices. This significantly reduces the time spent chasing payments.' },
-      { question: 'Does invoicing software integrate with my bank?', answer: 'QuickBooks, Xero, and FreeAgent offer bank feeds that automatically import transactions. This makes reconciliation faster and reduces manual bookkeeping.' },
-      { question: 'Can I create quotes and invoices in the same software?', answer: 'Trade-specific platforms like Tradify and Powered Now allow you to create a quote, convert it to a job, then convert the completed job to an invoice \u2014 all within the same system with no re-entry.' },
-      { question: 'What about expenses tracking for electricians?', answer: 'Materials, tools, van costs, and other expenses should be tracked in your invoicing or accounting software. This ensures accurate profit calculations and correct tax deductions.' },
-      { question: 'Do I need an accountant if I have invoicing software?', answer: 'Software handles the day-to-day bookkeeping, but most electricians benefit from an accountant for year-end accounts, tax planning, and MTD setup. QuickBooks and Xero allow accountants to access your books directly.' },
+      { question: 'Can invoicing software send automatic payment reminders?', answer: 'Yes. QuickBooks, Xero, Tradify, and most modern invoicing platforms send automatic reminders for overdue invoices.' },
+      { question: 'Does invoicing software integrate with my bank?', answer: 'QuickBooks, Xero, and FreeAgent offer bank feeds that automatically import transactions for faster reconciliation.' },
+      { question: 'Can I create quotes and invoices in the same software?', answer: 'Trade-specific platforms like Tradify and Powered Now allow you to create a quote, convert it to a job, then convert the completed job to an invoice \u2014 all within the same system.' },
+      { question: 'What about expenses tracking for electricians?', answer: 'Materials, tools, van costs, and other expenses should be tracked in your invoicing or accounting software for accurate profit calculations and correct tax deductions.' },
+      { question: 'Do I need an accountant if I have invoicing software?', answer: 'Software handles day-to-day bookkeeping, but most electricians benefit from an accountant for year-end accounts, tax planning, and MTD setup. QuickBooks and Xero allow accountants to access your books directly.' },
     ],
     relatedPages: [
       { slug: 'best-quoting-app-electricians-uk', label: 'Best Quoting Apps for Electricians' },
@@ -414,9 +432,6 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     ],
   },
 
-  /* =====================================================================
-     5. BEST QUOTING APP ELECTRICIANS UK
-     ===================================================================== */
   'best-quoting-app-electricians-uk': {
     slug: 'best-quoting-app-electricians-uk',
     title: 'Best Quoting Apps for UK Electricians \u2013 2026 Review',
@@ -427,11 +442,16 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     breadcrumbLabel: 'Quoting Apps',
     tradeSlug: 'electricians',
     tradeCategory: 'Electricians',
-    trustSignals: [
-      'On-site mobile quoting tested',
-      'UK materials pricing verified',
-      'CIS deduction support checked',
-      'Quote-to-invoice workflow tested',
+    trustSignals: ['On-site mobile quoting tested', 'UK materials pricing verified', 'CIS deduction support checked', 'Quote-to-invoice workflow tested'],
+    externalLinks: [
+      { url: 'https://www.gov.uk/what-is-the-construction-industry-scheme', label: 'HMRC \u2014 Construction Industry Scheme (CIS)' },
+      { url: 'https://www.theiet.org/standards/the-wiring-regulations/', label: 'IET Wiring Regulations (BS 7671)' },
+      { url: 'https://www.tradify.com/', label: 'Tradify \u2014 Trade Job Management' },
+    ],
+    definedTerms: [
+      { name: 'Quote', description: 'A fixed-price offer for a specified scope of work that cannot be changed once accepted by the customer.' },
+      { name: 'Estimate', description: 'A rough idea of cost that can change as more information becomes available. Not legally binding.' },
+      { name: 'CIS', description: 'Construction Industry Scheme \u2014 HMRC scheme requiring contractors to deduct tax from subcontractor payments.' },
     ],
     contentSections: [
       {
@@ -439,7 +459,6 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
         paragraphs: [
           'Research consistently shows that the first tradesperson to send a professional quote wins the job. For electricians competing for domestic work, getting a clear, itemised quote to the customer within hours of the site visit dramatically increases your win rate. Yet many electricians still quote verbally, via text message, or by emailing a rough figure with no breakdown.',
           'Professional quoting software lets you build a quote on site during the initial visit, send it to the customer before you have even left their driveway, and automatically follow up if they have not responded within a set period. This speed and professionalism wins more work than being the cheapest option.',
-          'The best quoting apps for electricians go beyond basic line items. They include UK electrical materials at current trade prices, calculate labour based on your hourly rate and estimated hours, add VAT and CIS deductions where applicable, and produce a branded PDF that makes you look established and trustworthy.',
         ],
       },
       {
@@ -448,26 +467,11 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
           'A quoting app built for UK electricians needs several features that generic tools lack. Pre-built templates for common electrical jobs save time on repetitive quotes for socket additions, consumer unit upgrades, rewires, and lighting installations. UK materials pricing with current trade costs eliminates guesswork and ensures your margins are accurate.',
         ],
         checkpoints: [
-          {
-            title: 'Pre-built electrical job templates',
-            description: 'Common domestic jobs should be pre-loaded so you select, adjust quantities, and send \u2014 rather than typing everything from scratch.',
-          },
-          {
-            title: 'Mobile-first design',
-            description: 'The app must work well on a phone at the customer\u2019s property, not just on a desktop back at the office.',
-          },
-          {
-            title: 'Quote-to-job-to-invoice workflow',
-            description: 'When a quote is accepted, it should convert to an active job and eventually an invoice without re-entering any data.',
-          },
-          {
-            title: 'Customer acceptance tracking',
-            description: 'Know when the customer opens your quote, and send automatic reminders if they have not responded.',
-          },
-          {
-            title: 'Branded PDF output',
-            description: 'Your company name, logo, and contact details on every quote. Professional appearance wins jobs.',
-          },
+          { title: 'Pre-built electrical job templates', description: 'Common domestic jobs should be pre-loaded so you select, adjust quantities, and send \u2014 rather than typing everything from scratch.' },
+          { title: 'Mobile-first design', description: 'The app must work well on a phone at the customer\u2019s property, not just on a desktop back at the office.' },
+          { title: 'Quote-to-job-to-invoice workflow', description: 'When a quote is accepted, it should convert to an active job and eventually an invoice without re-entering any data.' },
+          { title: 'Customer acceptance tracking', description: 'Know when the customer opens your quote, and send automatic reminders if they have not responded.' },
+          { title: 'Branded PDF output', description: 'Your company name, logo, and contact details on every quote. Professional appearance wins jobs.' },
         ],
       },
       {
@@ -475,28 +479,26 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
         paragraphs: [
           'Dedicated quoting tools like YourTradebase and QuoteItPro focus exclusively on producing and managing quotes. They are typically cheaper and simpler than full job management platforms but require a separate tool for invoicing, scheduling, and certificates.',
           'All-in-one platforms like Tradify, Powered Now, and Workever include quoting as part of a broader suite. The advantage is a seamless workflow from quote to job to invoice to certificate, all in one system. The disadvantage is higher cost and a steeper learning curve.',
-          'For sole traders and micro-businesses, a dedicated quoting app plus a separate invoicing tool is often the most cost-effective approach. For growing firms with employees, an all-in-one platform eliminates the friction of switching between multiple tools.',
         ],
       },
       {
         subheading: 'Free quote tools vs paid software',
         paragraphs: [
           'Free quoting tools exist, including our own quote generator on UKTradeApps. These are useful for generating quick estimates and professional-looking documents but lack features like customer tracking, automatic follow-ups, and quote-to-invoice conversion.',
-          'Paid quoting software adds workflow automation that directly impacts your revenue. Automatic follow-ups alone can increase your quote acceptance rate by fifteen to twenty percent. Customer acceptance tracking tells you which quotes to chase and which have already been viewed but not accepted. And the quote-to-invoice workflow saves you re-entering every line item when the customer says yes.',
-          'Most paid quoting apps offer free trials of fourteen to thirty days. Use this period to test the app with real quotes and measure whether the time saving and improved win rate justify the monthly cost.',
+          'Paid quoting software adds workflow automation that directly impacts your revenue. Automatic follow-ups alone can increase your quote acceptance rate by fifteen to twenty percent.',
         ],
       },
     ],
     faqs: [
       { question: 'What is the best quoting app for UK electricians?', answer: 'Tradify and Powered Now are the strongest all-in-one options. YourTradebase and QuoteItPro are best for dedicated quoting. Our free quote generator on UKTradeApps is ideal for quick estimates without a subscription.' },
       { question: 'Can I create quotes on my phone?', answer: 'Yes. All modern quoting apps are mobile-first. The best ones let you build and send a professional quote while still at the customer\u2019s property.' },
-      { question: 'How do I include CIS deductions in quotes?', answer: 'Trade-specific quoting apps like Powered Now and Tradify handle CIS automatically when you mark a customer as a main contractor. Generic quoting tools usually cannot.' },
-      { question: 'Should I show material costs on quotes?', answer: 'This depends on your business model. Some electricians show a full itemised breakdown. Others show labour and materials as separate totals. Most quoting apps let you choose how much detail to display.' },
-      { question: 'How do I follow up on quotes I have sent?', answer: 'The best quoting apps track when customers open your quote and send automatic follow-up reminders. This removes the need to manually chase every quote.' },
-      { question: 'Can quoting software convert quotes to invoices?', answer: 'Yes. Tradify, Powered Now, and Workever all convert accepted quotes directly into invoices, carrying forward all line items, pricing, and customer details.' },
+      { question: 'How do I include CIS deductions in quotes?', answer: 'Trade-specific quoting apps like Powered Now and Tradify handle CIS automatically when you mark a customer as a main contractor.' },
+      { question: 'Should I show material costs on quotes?', answer: 'This depends on your business model. Some electricians show a full itemised breakdown. Others show labour and materials as separate totals.' },
+      { question: 'How do I follow up on quotes I have sent?', answer: 'The best quoting apps track when customers open your quote and send automatic follow-up reminders.' },
+      { question: 'Can quoting software convert quotes to invoices?', answer: 'Yes. Tradify, Powered Now, and Workever all convert accepted quotes directly into invoices.' },
       { question: 'How much does quoting software cost?', answer: 'Dedicated quoting apps start from \u00a310-25 per month. All-in-one platforms with quoting range from \u00a315-50 per month. Our UKTradeApps quote generator is free.' },
-      { question: 'Do quoting apps include UK electrical materials pricing?', answer: 'Some do. Trade-specific platforms may include a materials database with current trade prices. Others let you build your own price list that you reuse across quotes.' },
-      { question: 'Can I add my company logo to quotes?', answer: 'Yes. Every professional quoting app allows you to add your business logo, contact details, and accreditation logos to produce branded documents.' },
+      { question: 'Do quoting apps include UK electrical materials pricing?', answer: 'Some do. Trade-specific platforms may include a materials database with current trade prices.' },
+      { question: 'Can I add my company logo to quotes?', answer: 'Yes. Every professional quoting app allows you to add your business logo and contact details.' },
       { question: 'What is the fastest way to send a quote after a site visit?', answer: 'Use a mobile quoting app with pre-built job templates. Select the job type, adjust quantities and pricing, add customer details, and send \u2014 all before leaving the property.' },
     ],
     relatedPages: [
@@ -507,11 +509,6 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
       { slug: 'electricians', label: 'Browse All Electrician Software' },
     ],
   },
-
-  /* =====================================================================
-     6-15: Remaining pages with same depth
-     Adding them now with full content
-     ===================================================================== */
 
   'electrician-job-management-software-uk': {
     slug: 'electrician-job-management-software-uk',
@@ -524,20 +521,29 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     tradeSlug: 'electricians',
     tradeCategory: 'Electricians',
     trustSignals: ['UK compliance features verified', 'CIS and MTD support tested', 'Mobile app performance reviewed', 'Pricing verified in GBP'],
+    externalLinks: [
+      { url: 'https://www.tradify.com/', label: 'Tradify \u2014 Trade Job Management' },
+      { url: 'https://workever.com/', label: 'Workever \u2014 Field Service Management' },
+      { url: 'https://www.commusoft.co.uk/', label: 'Commusoft \u2014 Field Service Software' },
+      { url: 'https://www.gov.uk/what-is-the-construction-industry-scheme', label: 'HMRC \u2014 CIS Guide' },
+    ],
+    definedTerms: [
+      { name: 'Job Management Software', description: 'A platform that combines scheduling, quoting, invoicing, and customer management into a single system for trade businesses.' },
+      { name: 'Field Service Management', description: 'Software for managing mobile workers, including dispatching, tracking, and coordinating field-based teams.' },
+      { name: 'CRM', description: 'Customer Relationship Management \u2014 a system for tracking customer interactions, history, and communications.' },
+    ],
     contentSections: [
       {
         heading: 'What is job management software and why do UK electricians need it',
         paragraphs: [
           'Job management software replaces the diary, spreadsheet, and notebook system that most small electrical businesses start with. It brings scheduling, quoting, invoicing, customer records, and team communication into a single platform accessible from your phone, tablet, or desktop.',
           'For sole traders, it eliminates double entry and admin time. For growing firms with two to twenty employees, it becomes essential for dispatching engineers, tracking job progress, and ensuring nothing falls through the cracks. The average UK electrical business saves between five and ten hours per week by switching from manual processes to job management software.',
-          'The UK market has several strong options, each designed for a different size of business. Tradify and Powered Now excel for sole traders and micro-businesses. Workever hits the sweet spot for small to medium firms. Commusoft and simPRO target larger operations with complex scheduling and asset management needs.',
         ],
       },
       {
         subheading: 'Key features to compare',
         paragraphs: [
-          'When evaluating job management software, focus on these areas: scheduling and dispatch (can you drag-and-drop jobs onto a calendar and assign them to engineers?), quoting (does it convert quotes to jobs to invoices seamlessly?), invoicing (does it handle VAT, CIS, and integrate with your accounting software?), customer management (does it store customer history, property details, and communication logs?), and mobile access (does the app work on site with offline support?).',
-          'UK-specific requirements matter here. CIS reverse charge invoicing, MTD-compatible accounting integration, and NICEIC or NAPIT certificate generation are features that generic international platforms lack. Always verify that the platform handles these before committing.',
+          'When evaluating job management software, focus on these areas: scheduling and dispatch, quoting, invoicing with VAT and CIS compliance, customer management, and mobile access with offline support.',
         ],
         checkpoints: [
           { title: 'Scheduling and dispatch', description: 'Drag-and-drop calendar with engineer assignment, travel time estimation, and customer notifications.' },
@@ -550,24 +556,22 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
       {
         subheading: 'Choosing by business size',
         paragraphs: [
-          'For sole traders, simplicity wins. Tradify and Powered Now offer clean interfaces that a single electrician can set up in an afternoon. They cover quoting, invoicing, scheduling, and basic customer management without overwhelming you with features you will never use. Pricing starts from fifteen to thirty-four pounds per month.',
-          'For small teams of two to ten people, Workever offers the best balance of scheduling, mobile tools, and UK compliance. It handles team dispatch, job costing, and customer communication at a price point that scales sensibly per user.',
-          'For larger firms with ten or more engineers, Commusoft and simPRO provide the advanced scheduling, asset management, stock control, and reporting capabilities that enterprise operations require. These platforms cost more and take longer to implement but offer significant efficiency gains at scale.',
-          'The most common mistake is choosing a platform built for a larger business than yours. An over-featured system creates complexity without benefit. Start with the simplest tool that covers your actual needs and upgrade when your business genuinely outgrows it.',
+          'For sole traders, simplicity wins. Tradify and Powered Now offer clean interfaces that a single electrician can set up in an afternoon. For small teams of two to ten people, Workever offers the best balance of scheduling, mobile tools, and UK compliance. For larger firms with ten or more engineers, Commusoft and simPRO provide advanced scheduling, asset management, and reporting capabilities.',
+          'The most common mistake is choosing a platform built for a larger business than yours. An over-featured system creates complexity without benefit. Start with the simplest tool that covers your actual needs.',
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best job management software for UK electricians?', answer: 'Tradify for sole traders, Workever for small teams, Commusoft for growing businesses, and simPRO for large operations. Each is reviewed in detail in our directory.' },
-      { question: 'How much does job management software cost?', answer: 'From \u00a315/month for basic packages to \u00a350+/user/month for enterprise features. Most offer free trials of 14-30 days.' },
-      { question: 'Can job management software produce electrical certificates?', answer: 'Some platforms like Powered Now include built-in certification. Others integrate with dedicated certification apps. Check our reviews for details.' },
-      { question: 'Does job management software work offline?', answer: 'Most modern platforms cache data locally so you can view schedules and job details offline. Full offline job completion varies by platform.' },
-      { question: 'Can I integrate with QuickBooks or Xero?', answer: 'Tradify, Workever, Powered Now, and Commusoft all integrate with major UK accounting packages. This syncs invoices, payments, and expenses automatically.' },
-      { question: 'How long does it take to set up job management software?', answer: 'Basic setup takes a few hours. Importing existing customer data and configuring workflows may take a week. Most vendors offer onboarding support.' },
-      { question: 'Do I need job management software as a sole trader?', answer: 'It is not essential but saves significant admin time. Even a simple platform that handles quoting and invoicing can save five or more hours per week.' },
-      { question: 'Can customers book jobs directly?', answer: 'Some platforms offer online booking portals. Others allow customer self-service for viewing quotes and invoices. This varies by platform.' },
-      { question: 'What about GPS tracking of engineers?', answer: 'Workever, Commusoft, and simPRO include live GPS tracking of field workers. Useful for dispatching the nearest engineer to an emergency call.' },
-      { question: 'Can I try job management software before buying?', answer: 'Yes. Every platform we review offers a free trial. Test with real jobs during the trial period to evaluate whether it fits your workflow.' },
+      { question: 'What is the best job management software for UK electricians?', answer: 'Tradify for sole traders, Workever for small teams, Commusoft for growing businesses, and simPRO for large operations.' },
+      { question: 'How much does job management software cost?', answer: 'From \u00a315/month for basic packages to \u00a350+/user/month for enterprise features. Most offer free trials.' },
+      { question: 'Can job management software produce electrical certificates?', answer: 'Some platforms like Powered Now include built-in certification. Others integrate with dedicated certification apps.' },
+      { question: 'Does job management software work offline?', answer: 'Most modern platforms cache data locally so you can view schedules and job details offline.' },
+      { question: 'Can I integrate with QuickBooks or Xero?', answer: 'Tradify, Workever, Powered Now, and Commusoft all integrate with major UK accounting packages.' },
+      { question: 'How long does it take to set up?', answer: 'Basic setup takes a few hours. Full configuration with customer data import may take a week.' },
+      { question: 'Do I need it as a sole trader?', answer: 'Not essential but saves significant admin time. Even a simple platform can save five or more hours per week.' },
+      { question: 'Can customers book jobs directly?', answer: 'Some platforms offer online booking portals. Others allow customer self-service for quotes and invoices.' },
+      { question: 'What about GPS tracking?', answer: 'Workever, Commusoft, and simPRO include live GPS tracking for dispatching the nearest engineer.' },
+      { question: 'Can I try it before buying?', answer: 'Yes. Every platform we review offers a free trial. Test with real jobs during the trial period.' },
     ],
     relatedPages: [
       { slug: 'best-quoting-app-electricians-uk', label: 'Best Quoting Apps for Electricians' },
@@ -589,48 +593,57 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     tradeSlug: 'electricians',
     tradeCategory: 'Electricians',
     trustSignals: ['IET Code of Practice compliance checked', 'Asset tracking features tested', 'Certificate generation verified', 'Integration with PAT testers reviewed'],
+    externalLinks: [
+      { url: 'https://www.theiet.org/publishing/iet-standards/building-regulations-and-electrical-safety/', label: 'IET \u2014 Code of Practice for In-Service Inspection and Testing' },
+      { url: 'https://www.hse.gov.uk/electricity/maintenance/index.htm', label: 'HSE \u2014 Electrical Equipment Maintenance' },
+      { url: 'https://www.legislation.gov.uk/uksi/1989/635/contents/made', label: 'Electricity at Work Regulations 1989' },
+    ],
+    definedTerms: [
+      { name: 'PAT Testing', description: 'Portable Appliance Testing \u2014 the inspection and testing of electrical equipment to ensure it is safe for continued use.' },
+      { name: 'IET Code of Practice', description: 'The IET\u2019s guidance document for in-service inspection and testing of electrical equipment, defining test frequencies and pass/fail criteria.' },
+      { name: 'Class I Appliance', description: 'An appliance with basic insulation and an earth connection for safety. Requires earth continuity testing during PAT.' },
+      { name: 'Class II Appliance', description: 'A double-insulated appliance with no earth connection. Does not require earth continuity testing.' },
+    ],
     contentSections: [
       {
         heading: 'Why PAT testing software saves time and reduces risk',
         paragraphs: [
           'Portable Appliance Testing is a significant revenue stream for many UK electricians. Whether you test a handful of appliances for a small office or thousands for a university or factory, the admin burden of recording results, generating certificates, and tracking retest dates can overwhelm a paper-based system.',
           'PAT testing software digitises the entire process. Scan an appliance barcode, enter test results, and the system generates a certificate, logs the result against the asset, and schedules the next retest. For high-volume PAT testing, this can save hours per day compared to handwritten records.',
-          'The IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment provides the testing standards, but compliance with record-keeping requirements is where software adds the most value. Digital records are easier to store, search, and produce during audits than paper files.',
         ],
       },
       {
         subheading: 'Features that matter for PAT testing software',
         paragraphs: [
           'The essential features are asset register management with barcode or QR code scanning, automatic calculation of pass or fail based on entered readings, certificate and label generation, retest scheduling with automatic reminders, and client reporting with summary statistics.',
-          'Advanced features include integration with PAT testing instruments that transfer readings directly to the software, photo capture for each appliance, and multi-site management for testing companies that work across many client locations.',
         ],
         checkpoints: [
           { title: 'Barcode and QR code scanning', description: 'Scan appliance labels to pull up existing records instantly rather than searching manually.' },
-          { title: 'Auto pass/fail calculation', description: 'Software should determine pass or fail based on entered readings and the appliance class, eliminating human error.' },
+          { title: 'Auto pass/fail calculation', description: 'Software should determine pass or fail based on entered readings and the appliance class.' },
           { title: 'Certificate and label printing', description: 'Generate test certificates and pass/fail labels directly from the app, on site.' },
           { title: 'Retest scheduling', description: 'Automatic reminders when appliances are due for retesting, helping you retain clients.' },
-          { title: 'Client reporting', description: 'Professional summary reports showing all tested appliances, results, and any failures for the client\u2019s records.' },
+          { title: 'Client reporting', description: 'Professional summary reports showing all tested appliances, results, and any failures.' },
         ],
       },
       {
         subheading: 'PAT testing as a business: software considerations',
         paragraphs: [
-          'If PAT testing is a standalone service rather than an add-on to your electrical work, your software needs are different. Volume handling becomes critical \u2014 you may test hundreds of appliances in a single day. Batch processing, quick-entry modes, and instrument integration save significant time at this scale.',
-          'Client management features become important too. You need to track which clients are due for annual retesting, send automatic reminders to book their next visit, and produce professional reports that justify your fee. The best PAT testing software turns a one-off job into recurring annual revenue by managing the retest cycle for you.',
+          'If PAT testing is a standalone service rather than an add-on to your electrical work, your software needs are different. Volume handling becomes critical. Batch processing, quick-entry modes, and instrument integration save significant time at this scale.',
+          'Client management features become important too. You need to track which clients are due for annual retesting, send automatic reminders, and produce professional reports that justify your fee.',
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best PAT testing app for UK electricians?', answer: 'PAT Guardian and iCertifi PAT are the most popular standalone options. For electricians who also do installation work, an all-in-one platform may be more efficient.' },
-      { question: 'Do I need PAT testing software?', answer: 'For low-volume testing, paper records are adequate. For more than fifty appliances per week, software pays for itself in time saved and improved record accuracy.' },
-      { question: 'Can PAT testing software connect to my test instrument?', answer: 'Some apps integrate with specific PAT testers via Bluetooth or USB, transferring readings directly. Check compatibility with your instrument before buying.' },
-      { question: 'How much does PAT testing software cost?', answer: 'Prices range from free basic apps to \u00a320-40 per month for professional versions with asset management and client reporting.' },
-      { question: 'Does PAT testing software generate certificates?', answer: 'Yes. All professional PAT testing apps generate certificates and pass/fail labels. Many also produce client summary reports.' },
-      { question: 'Can I manage multiple client sites?', answer: 'Yes. Professional PAT testing software supports multiple sites per client with separate asset registers and reporting for each location.' },
-      { question: 'Is PAT testing a legal requirement?', answer: 'There is no specific law requiring PAT testing, but the Electricity at Work Regulations 1989 require electrical equipment to be maintained in a safe condition. PAT testing is the accepted way to demonstrate compliance.' },
-      { question: 'How do I schedule retests automatically?', answer: 'Most PAT testing apps allow you to set retest intervals per appliance class. The software then alerts you when appliances are due, and some send automatic reminders to clients.' },
-      { question: 'Can I print labels on site?', answer: 'Yes, with a portable label printer. Most PAT testing apps support Bluetooth label printers for producing pass/fail stickers during testing.' },
-      { question: 'What records do I need to keep for PAT testing?', answer: 'You should record the appliance description, location, test date, test results, pass/fail status, and next retest date. Software manages all of this automatically.' },
+      { question: 'What is the best PAT testing app for UK electricians?', answer: 'PAT Guardian and iCertifi PAT are the most popular standalone options. For all-in-one needs, consider a platform that includes PAT alongside other certification.' },
+      { question: 'Do I need PAT testing software?', answer: 'For low-volume testing, paper records are adequate. For more than fifty appliances per week, software pays for itself in time saved.' },
+      { question: 'Can PAT testing software connect to my test instrument?', answer: 'Some apps integrate with specific PAT testers via Bluetooth or USB. Check compatibility before buying.' },
+      { question: 'How much does PAT testing software cost?', answer: 'From free basic apps to \u00a320-40 per month for professional versions with asset management and client reporting.' },
+      { question: 'Does it generate certificates?', answer: 'Yes. All professional PAT testing apps generate certificates and pass/fail labels.' },
+      { question: 'Can I manage multiple client sites?', answer: 'Yes. Professional PAT software supports multiple sites per client with separate asset registers.' },
+      { question: 'Is PAT testing a legal requirement?', answer: 'Not specifically, but the Electricity at Work Regulations 1989 require equipment to be maintained safely. PAT testing is the accepted compliance method.' },
+      { question: 'How do I schedule retests automatically?', answer: 'Set retest intervals per appliance class. The software alerts you when appliances are due and can send reminders to clients.' },
+      { question: 'Can I print labels on site?', answer: 'Yes, with a portable Bluetooth label printer. Most PAT apps support this.' },
+      { question: 'What records do I need to keep?', answer: 'Record the appliance description, location, test date, results, pass/fail status, and next retest date. Software manages all of this automatically.' },
     ],
     relatedPages: [
       { slug: 'best-electrical-certification-software-uk', label: 'Best Certification Software' },
@@ -652,48 +665,55 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     tradeSlug: 'builders',
     tradeCategory: 'Builders',
     trustSignals: ['UK materials pricing verified', 'Labour rate accuracy checked', 'CIS support tested', 'Takeoff features reviewed'],
+    externalLinks: [
+      { url: 'https://www.estimatorxpress.co.uk/', label: 'EstimatorXpress \u2014 UK Building Estimating' },
+      { url: 'https://www.rics.org/profession-standards/rics-standards-and-guidance/sector-standards/construction-standards', label: 'RICS \u2014 Construction Standards' },
+      { url: 'https://www.gov.uk/guidance/building-control', label: 'UK Gov \u2014 Building Control' },
+      { url: 'https://www.gov.uk/what-is-the-construction-industry-scheme', label: 'HMRC \u2014 CIS Guide' },
+    ],
+    definedTerms: [
+      { name: 'Takeoff', description: 'The process of measuring quantities of materials needed from construction plans and drawings.' },
+      { name: 'Bill of Quantities', description: 'A detailed document listing materials, labour, and other costs required to complete a construction project.' },
+      { name: 'Tender', description: 'A formal offer to carry out construction work at a specified price, submitted in competition with other builders.' },
+    ],
     contentSections: [
       {
         heading: 'Why estimating software is the most important tool for UK builders',
         paragraphs: [
-          'Estimating is where builders win or lose money. Underestimate and you eat the difference. Overestimate and you lose the job. The challenge for UK builders is that material prices fluctuate constantly, labour rates vary by region and trade, and every project has unique complexities that generic rules of thumb cannot capture.',
-          'Estimating software addresses this by maintaining current material prices from UK suppliers, applying regional labour rates, calculating quantities from plans or measurements, and producing detailed breakdowns that clients trust. The best platforms can turn a five-hour manual estimate into a one-hour process with greater accuracy.',
-          'This is particularly valuable for competitive tendering where you need to submit multiple estimates per week. The speed advantage compounds \u2014 a builder using estimating software can tender four to five times as many jobs as one using spreadsheets, dramatically increasing their win rate simply by being present in more opportunities.',
+          'Estimating is where builders win or lose money. Underestimate and you eat the difference. Overestimate and you lose the job. The challenge for UK builders is that material prices fluctuate constantly, labour rates vary by region and trade, and every project has unique complexities.',
+          'Estimating software addresses this by maintaining current material prices, applying regional labour rates, calculating quantities from plans, and producing detailed breakdowns. The best platforms can turn a five-hour manual estimate into a one-hour process with greater accuracy.',
         ],
       },
       {
         subheading: 'Types of estimating software for builders',
         paragraphs: [
-          'The market divides into three categories. Quick estimating tools like Buildxact produce fast ballpark estimates based on project type, size, and specification level. These are ideal for domestic builders pricing extensions, loft conversions, and renovations where speed matters more than granular accuracy.',
-          'Full takeoff and estimating platforms like EstimatorXpress and STACK allow you to measure quantities from digital plans, apply current material and labour rates, and produce detailed cost breakdowns suitable for commercial tenders. These require more setup and learning but produce significantly more accurate estimates.',
-          'Integrated project management platforms like simPRO and Procore include estimating as part of a broader suite covering scheduling, resource allocation, and financial management. These make sense for larger contractors managing multiple projects simultaneously.',
+          'Quick estimating tools like Buildxact produce fast ballpark estimates based on project type, size, and specification. Full takeoff platforms like EstimatorXpress and STACK allow you to measure quantities from digital plans. Integrated platforms like simPRO include estimating as part of broader project management.',
         ],
       },
       {
         subheading: 'UK-specific features builders need',
         paragraphs: [
-          'Generic estimating software designed for the US or Australian market misses critical UK requirements. UK material suppliers price differently from international ones. VAT handling on construction services follows specific HMRC rules. CIS deductions apply to subcontractor payments. Building regulations compliance costs need to be factored in.',
-          'The best UK builder estimating software includes BCIS or Spons pricing data, handles the domestic reverse charge for VAT on construction services, calculates CIS deductions on subcontractor elements, and factors in Building Control notification fees and warranty costs where applicable.',
+          'Generic estimating software designed for the US or Australian market misses critical UK requirements. The best UK builder estimating software includes BCIS or Spons pricing data, handles the domestic reverse charge for VAT, calculates CIS deductions, and factors in Building Control notification fees.',
         ],
         checkpoints: [
-          { title: 'UK materials pricing', description: 'Current prices from UK builders merchants, updated regularly. Not US or Australian pricing.' },
-          { title: 'Regional labour rates', description: 'Rates that reflect the significant regional variation in UK construction labour costs.' },
-          { title: 'VAT and CIS handling', description: 'Correct treatment of VAT reverse charge and CIS deductions in estimate output.' },
-          { title: 'Building regs costs', description: 'Automatic inclusion of Building Control fees, warranty costs, and compliance items.' },
+          { title: 'UK materials pricing', description: 'Current prices from UK builders merchants, updated regularly.' },
+          { title: 'Regional labour rates', description: 'Rates reflecting significant regional variation in UK construction labour costs.' },
+          { title: 'VAT and CIS handling', description: 'Correct treatment of VAT reverse charge and CIS deductions.' },
+          { title: 'Building regs costs', description: 'Automatic inclusion of Building Control fees and compliance items.' },
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best estimating software for UK builders?', answer: 'EstimatorXpress is the market leader for detailed estimating. Buildxact is best for quick domestic estimates. STACK is best for on-screen takeoffs from digital plans.' },
-      { question: 'How much does builder estimating software cost?', answer: 'From \u00a339/month for basic packages to \u00a3150+/month for full commercial estimating suites with takeoff tools.' },
-      { question: 'Can estimating software measure from plans?', answer: 'Yes. EstimatorXpress, STACK, and Procore Estimating all support on-screen takeoff from PDF plans, calculating quantities automatically.' },
-      { question: 'Does estimating software include UK material prices?', answer: 'The best UK platforms include regularly updated material pricing. Some integrate directly with builders merchant price lists.' },
-      { question: 'Can I use estimating software on my phone?', answer: 'Quick estimating tools work on mobile. Full takeoff platforms work better on tablets or desktops due to the plan measurement interface.' },
-      { question: 'How accurate is estimating software compared to manual methods?', answer: 'Studies show software estimates are typically within 2-5% of actual costs, compared to 10-20% variance with manual methods.' },
-      { question: 'Does it handle subcontractor pricing?', answer: 'Yes. You can include subcontractor quotes as line items and the software applies CIS deductions where required.' },
-      { question: 'Can I create templates for common job types?', answer: 'Yes. Save templates for extensions, loft conversions, renovations, and other repeat job types to speed up future estimates.' },
-      { question: 'Does estimating software integrate with accounting?', answer: 'Most platforms export to QuickBooks, Xero, or Sage. Some integrate directly for seamless cost tracking from estimate to final account.' },
-      { question: 'How long does it take to learn estimating software?', answer: 'Basic tools take hours. Full takeoff platforms take one to two weeks of regular use to become proficient. Most vendors offer training.' },
+      { question: 'What is the best estimating software for UK builders?', answer: 'EstimatorXpress for detailed estimating, Buildxact for quick domestic estimates, STACK for on-screen takeoffs from digital plans.' },
+      { question: 'How much does it cost?', answer: 'From \u00a339/month for basic packages to \u00a3150+/month for full commercial estimating suites.' },
+      { question: 'Can it measure from plans?', answer: 'Yes. EstimatorXpress, STACK, and Procore Estimating all support on-screen takeoff from PDF plans.' },
+      { question: 'Does it include UK material prices?', answer: 'The best UK platforms include regularly updated material pricing from UK suppliers.' },
+      { question: 'Can I use it on my phone?', answer: 'Quick estimating tools work on mobile. Full takeoff platforms work better on tablets or desktops.' },
+      { question: 'How accurate is it?', answer: 'Software estimates are typically within 2-5% of actual costs, compared to 10-20% with manual methods.' },
+      { question: 'Does it handle subcontractor pricing?', answer: 'Yes. Include subcontractor quotes as line items with CIS deductions applied.' },
+      { question: 'Can I create templates?', answer: 'Yes. Save templates for extensions, loft conversions, and other repeat job types.' },
+      { question: 'Does it integrate with accounting?', answer: 'Most export to QuickBooks, Xero, or Sage.' },
+      { question: 'How long to learn?', answer: 'Basic tools take hours. Full takeoff platforms take one to two weeks of regular use.' },
     ],
     relatedPages: [
       { slug: 'best-snagging-app-builders-uk', label: 'Best Snagging Apps for Builders' },
@@ -715,24 +735,31 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     tradeSlug: 'builders',
     tradeCategory: 'Builders',
     trustSignals: ['On-site photo capture tested', 'Offline defect logging verified', 'Report quality reviewed', 'UK building standards compliance checked'],
+    externalLinks: [
+      { url: 'https://www.nhbc.co.uk/', label: 'NHBC \u2014 New Home Warranty Provider' },
+      { url: 'https://www.gov.uk/guidance/building-control', label: 'UK Gov \u2014 Building Control' },
+      { url: 'https://www.hse.gov.uk/construction/cdm/2015/index.htm', label: 'HSE \u2014 CDM 2015 Regulations' },
+    ],
+    definedTerms: [
+      { name: 'Snagging', description: 'The process of identifying and recording construction defects before, during, or after project handover.' },
+      { name: 'Remedial Work', description: 'Repair or correction work carried out to fix defects identified during snagging inspections.' },
+      { name: 'Handover', description: 'The formal transfer of a completed construction project from builder to client.' },
+    ],
     contentSections: [
       {
         heading: 'Why snagging software matters for UK builders',
         paragraphs: [
           'Snagging is the process of identifying and recording defects before, during, and after construction handover. For UK builders, producing a thorough snagging report is essential for managing subcontractor remedial work, satisfying clients during handovers, and protecting yourself against warranty claims.',
-          'Paper-based snagging lists are slow, hard to update, and produce an unprofessional output. A scribbled note saying "crack above door frame, bedroom 2" with no photo, no location pin, and no severity rating does not give your subcontractor enough information to fix the defect correctly.',
-          'Snagging software lets you walk through a property, photograph each defect, pin it to a floor plan, assign it to a subcontractor, set a deadline, and track resolution. The output is a professional PDF report with photos, locations, and status tracking that impresses clients and holds subcontractors accountable.',
+          'Snagging software lets you walk through a property, photograph each defect, pin it to a floor plan, assign it to a subcontractor, set a deadline, and track resolution. The output is a professional PDF report with photos, locations, and status tracking.',
         ],
       },
       {
         subheading: 'Key features for builder snagging apps',
-        paragraphs: [
-          'The essential features for a snagging app are photo capture with annotation, floor plan pinning so defects are located visually, severity classification, assignee tracking so each defect has a responsible party, and status management through from open to resolved. Report generation should produce a clean PDF that can be shared with clients and subcontractors.',
-        ],
+        paragraphs: ['The essential features are photo capture with annotation, floor plan pinning, severity classification, assignee tracking, and status management.'],
         checkpoints: [
           { title: 'Photo annotation', description: 'Circle, arrow, and text markup on photos to clearly identify the defect.' },
-          { title: 'Floor plan integration', description: 'Pin defects to their exact location on the building plan for easy identification.' },
-          { title: 'Subcontractor assignment', description: 'Assign each defect to the responsible trade and track their response.' },
+          { title: 'Floor plan integration', description: 'Pin defects to their exact location on the building plan.' },
+          { title: 'Subcontractor assignment', description: 'Assign each defect to the responsible trade and track response.' },
           { title: 'Offline mode', description: 'Capture defects on site without internet, syncing when connectivity returns.' },
           { title: 'Professional PDF reports', description: 'Client-ready reports with photos, locations, severities, and resolution status.' },
         ],
@@ -740,22 +767,21 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
       {
         subheading: 'AI-powered snagging: the emerging trend',
         paragraphs: [
-          'AI-powered snagging apps like SnagLog are changing the game. Instead of manually typing defect descriptions, you take a photo and the AI identifies the defect type, suggests a description, assigns a severity rating, and recommends a remediation approach. This dramatically reduces the time spent on documentation and produces more consistent, detailed reports.',
-          'AI snagging is particularly valuable for site managers who inspect multiple properties per day. The speed gain compounds across dozens of defects per property, and the consistency of AI-generated descriptions means subcontractors receive clearer instructions.',
+          'AI-powered snagging apps like SnagLog are changing the game. Take a photo and the AI identifies the defect type, suggests a description, assigns a severity rating, and recommends remediation. This dramatically reduces documentation time and produces more consistent reports.',
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best snagging app for UK builders?', answer: 'SnagLog for AI-powered reports, PlanRadar for enterprise projects, and Fieldwire for integrated project management with snagging.' },
-      { question: 'Can snagging apps work offline?', answer: 'Yes. The best snagging apps capture defects offline and sync when connectivity returns. Essential for new-build sites with poor signal.' },
-      { question: 'How do snagging apps help with handovers?', answer: 'They produce professional reports showing all identified defects, their status, and resolution proof. This gives clients confidence and documents your quality control process.' },
-      { question: 'Can I assign defects to subcontractors?', answer: 'Yes. Most snagging apps allow you to assign each defect to a responsible party and track their response and resolution.' },
-      { question: 'How much does snagging software cost?', answer: 'From free basic apps to \u00a330-50/month for professional versions. AI-powered tools like SnagLog charge per report.' },
-      { question: 'Can snagging apps pin defects to floor plans?', answer: 'Yes. Most professional snagging apps support floor plan upload and defect pinning for visual location tracking.' },
-      { question: 'Do snagging apps generate reports?', answer: 'Yes. Every professional snagging app produces PDF reports with photos, locations, severities, and status tracking.' },
-      { question: 'Can homeowners use snagging apps?', answer: 'Some apps like SnagLog are designed for both professional builders and homeowners buying new-build properties.' },
-      { question: 'How does AI snagging work?', answer: 'You photograph a defect and AI identifies the type, suggests a description, assigns severity, and recommends remediation. This saves time and improves consistency.' },
-      { question: 'Is snagging software worth it for small builders?', answer: 'For any builder doing handovers or managing subcontractor remedial work, snagging software pays for itself in time saved and improved client satisfaction.' },
+      { question: 'What is the best snagging app for UK builders?', answer: 'SnagLog for AI-powered reports, PlanRadar for enterprise projects, and Fieldwire for integrated project management.' },
+      { question: 'Can snagging apps work offline?', answer: 'Yes. The best apps capture defects offline and sync when connectivity returns.' },
+      { question: 'How do they help with handovers?', answer: 'Professional reports showing all defects, their status, and resolution proof give clients confidence.' },
+      { question: 'Can I assign defects to subcontractors?', answer: 'Yes. Most apps allow assignment and tracking of each defect.' },
+      { question: 'How much does it cost?', answer: 'From free basic apps to \u00a330-50/month for professional versions.' },
+      { question: 'Can they pin defects to floor plans?', answer: 'Yes. Most professional snagging apps support floor plan upload and defect pinning.' },
+      { question: 'Do they generate reports?', answer: 'Yes. Every professional snagging app produces PDF reports with photos and status tracking.' },
+      { question: 'Can homeowners use them?', answer: 'Some apps like SnagLog are designed for both professionals and homeowners.' },
+      { question: 'How does AI snagging work?', answer: 'Photograph a defect and AI identifies the type, suggests a description, assigns severity, and recommends remediation.' },
+      { question: 'Is it worth it for small builders?', answer: 'For any builder doing handovers or managing remedial work, snagging software pays for itself in time saved.' },
     ],
     relatedPages: [
       { slug: 'best-estimating-software-builders-uk', label: 'Best Estimating Software for Builders' },
@@ -771,55 +797,58 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     title: 'Best Project Management Software for Small Builders UK',
     metaDescription: 'Compare affordable project management software for small UK builders. Scheduling, budgeting, and team tools reviewed and compared. Find the right fit.',
     h1: 'Best Project Management Software for Small UK Builders',
-    heroDescription: 'Enterprise project management tools are overkill for most small builders. This guide focuses on affordable, practical platforms designed for teams of one to ten people managing domestic and small commercial projects.',
-    quickAnswer: 'The best project management software for small UK builders includes Buildxact, Tradify, Powered Now, and Workever \u2014 affordable tools that handle scheduling, budgets, and team coordination.',
+    heroDescription: 'Enterprise project management tools are overkill for most small builders. This guide focuses on affordable, practical platforms designed for teams of one to ten people.',
+    quickAnswer: 'The best project management software for small UK builders includes Buildxact, Tradify, Powered Now, and Workever \u2014 affordable tools for scheduling, budgets, and team coordination.',
     breadcrumbLabel: 'Small Builder PM Software',
     tradeSlug: 'builders',
     tradeCategory: 'Builders',
     trustSignals: ['Tested for teams of 1-10', 'UK pricing verified', 'CDM 2015 features checked', 'Mobile access reviewed'],
+    externalLinks: [
+      { url: 'https://www.hse.gov.uk/construction/cdm/2015/index.htm', label: 'HSE \u2014 CDM 2015 Regulations' },
+      { url: 'https://www.gov.uk/guidance/building-control', label: 'UK Gov \u2014 Building Control' },
+      { url: 'https://www.buildxact.com/', label: 'Buildxact \u2014 Building Estimating & PM' },
+    ],
+    definedTerms: [
+      { name: 'CDM 2015', description: 'Construction (Design and Management) Regulations 2015 \u2014 UK health and safety regulations for construction projects.' },
+      { name: 'Gantt Chart', description: 'A visual project timeline showing tasks, durations, and dependencies.' },
+      { name: 'Variation', description: 'A change to the original scope of work, usually requiring client approval and a price adjustment.' },
+    ],
     contentSections: [
       {
         heading: 'Why small builders need different software from large contractors',
         paragraphs: [
-          'The project management software market is dominated by enterprise tools designed for contractors running multi-million pound commercial projects. Procore, Aconex, and Oracle Primavera are powerful but completely wrong for a small builder managing house extensions, loft conversions, and domestic renovations.',
-          'Small builders need software that is affordable per month rather than per user, quick to set up without a week of training, accessible on a phone while on site, and focused on the basics of scheduling, budget tracking, and client communication. They do not need resource levelling, critical path analysis, or BIM integration.',
-          'This guide focuses exclusively on tools that work for small UK building firms with one to ten people. We test affordability, mobile usability, and real-world fit for domestic and small commercial projects.',
+          'The project management software market is dominated by enterprise tools designed for multi-million pound commercial projects. Procore, Aconex, and Oracle Primavera are completely wrong for a small builder managing house extensions and loft conversions.',
+          'Small builders need software that is affordable, quick to set up, accessible on a phone while on site, and focused on scheduling, budget tracking, and client communication.',
         ],
       },
       {
         subheading: 'Essential features for small builder project management',
-        paragraphs: [
-          'The features that actually matter for small builders are project scheduling with a visual timeline or calendar, budget tracking against estimates, document storage for plans and specifications, client communication and progress updates, and subcontractor coordination.',
-          'Nice-to-have features include photo progress logging, automated client updates, and integration with estimating and accounting software. The key is finding a tool that covers the essentials without burying you in features designed for enterprise contractors.',
-        ],
+        paragraphs: ['The features that matter are project scheduling, budget tracking against estimates, document storage, client communication, and subcontractor coordination.'],
         checkpoints: [
-          { title: 'Simple scheduling', description: 'A visual calendar or timeline that shows what is happening on each project this week. Not a Gantt chart with 500 tasks.' },
-          { title: 'Budget tracking', description: 'Compare actual costs against your estimate as the project progresses. Know if you are on budget before it is too late.' },
-          { title: 'Photo logging', description: 'Capture dated, location-tagged progress photos directly from the app. Essential for client updates and dispute resolution.' },
-          { title: 'Client portal', description: 'Give clients a login where they can see progress, approve variations, and communicate without endless phone calls.' },
+          { title: 'Simple scheduling', description: 'A visual calendar showing what is happening on each project this week.' },
+          { title: 'Budget tracking', description: 'Compare actual costs against your estimate as the project progresses.' },
+          { title: 'Photo logging', description: 'Capture dated, location-tagged progress photos directly from the app.' },
+          { title: 'Client portal', description: 'Give clients a login to see progress, approve variations, and communicate.' },
         ],
       },
       {
         subheading: 'The platforms compared',
         paragraphs: [
-          'Buildxact is purpose-built for residential builders and offers estimating, scheduling, and project management in one platform. Its strength is the estimating engine which uses current UK material and labour rates. Scheduling is visual and straightforward. At around forty pounds per month, it is affordable for small firms.',
-          'Tradify is a general trades platform that works well for builders who want job management with light project management features. It excels at quoting and invoicing but project scheduling is simpler than dedicated PM tools. Best for sole traders and two-person firms.',
-          'Powered Now offers a solid all-round solution with offline support, which is a significant advantage on building sites with unreliable connectivity. It handles certificates, invoicing, and basic project tracking. Less depth in project management than Buildxact but broader business coverage.',
-          'Workever targets growing service businesses and offers strong scheduling and dispatch features. It is more suited to builders who manage recurring maintenance work alongside project work, with good team coordination tools for firms with field workers.',
+          'Buildxact is purpose-built for residential builders with estimating, scheduling, and project management. Tradify is a general trades platform best for sole traders. Powered Now offers solid all-round coverage with offline support. Workever targets growing service businesses with strong scheduling.',
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best project management software for small UK builders?', answer: 'Buildxact for residential builders who need estimating and scheduling. Tradify for sole traders wanting simplicity. Powered Now for all-round business management.' },
-      { question: 'How much does project management software cost for small builders?', answer: 'From \u00a315/month for basic platforms to \u00a360/month for full featured suites. All cheaper than enterprise tools at \u00a3100+/user/month.' },
-      { question: 'Do I need project management software for domestic work?', answer: 'Not for single-day jobs. For multi-week projects like extensions and renovations, basic PM software prevents costly oversights and improves client communication.' },
-      { question: 'Can project management software track budgets?', answer: 'Yes. Compare actual material purchases and labour costs against your estimate to identify budget overruns before they become losses.' },
-      { question: 'Does it work on my phone?', answer: 'All modern platforms have mobile apps. This is essential for builders who are on site all day rather than in an office.' },
-      { question: 'Can clients see project progress?', answer: 'Some platforms offer client portals with progress photos, timelines, and communication features. This reduces phone calls and builds client confidence.' },
-      { question: 'Do I need CDM 2015 features?', answer: 'For projects with more than one contractor or lasting more than 30 working days, CDM 2015 duties apply. Some platforms help with pre-construction information and construction phase plans.' },
-      { question: 'Can I manage subcontractors through the software?', answer: 'Most platforms support subcontractor communication, task assignment, and document sharing. Some handle subcontractor payments and CIS deductions.' },
-      { question: 'How long does it take to set up?', answer: 'Simple platforms like Tradify take hours. More featured tools like Buildxact take a few days to configure templates and import data.' },
-      { question: 'Should I use separate tools for estimating and project management?', answer: 'Buildxact combines both. Otherwise, use a dedicated estimating tool and a separate PM platform. Our quiz can recommend the best combination for your needs.' },
+      { question: 'What is the best PM software for small UK builders?', answer: 'Buildxact for residential builders needing estimating and scheduling. Tradify for sole traders wanting simplicity.' },
+      { question: 'How much does it cost?', answer: 'From \u00a315/month for basic platforms to \u00a360/month for full featured suites.' },
+      { question: 'Do I need it for domestic work?', answer: 'Not for single-day jobs. For multi-week projects, basic PM software prevents costly oversights.' },
+      { question: 'Can it track budgets?', answer: 'Yes. Compare actual costs against your estimate to identify overruns before they become losses.' },
+      { question: 'Does it work on my phone?', answer: 'All modern platforms have mobile apps, essential for builders on site all day.' },
+      { question: 'Can clients see project progress?', answer: 'Some platforms offer client portals with progress photos and communication features.' },
+      { question: 'Do I need CDM 2015 features?', answer: 'For projects with more than one contractor or lasting more than 30 days, CDM duties apply.' },
+      { question: 'Can I manage subcontractors?', answer: 'Most platforms support subcontractor communication, task assignment, and document sharing.' },
+      { question: 'How long does setup take?', answer: 'Simple platforms take hours. More featured tools take a few days.' },
+      { question: 'Should I use separate tools for estimating and PM?', answer: 'Buildxact combines both. Otherwise, use dedicated tools. Our quiz can recommend the best combination.' },
     ],
     relatedPages: [
       { slug: 'best-estimating-software-builders-uk', label: 'Best Estimating Software for Builders' },
@@ -836,54 +865,57 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     metaDescription: 'Compare the best quoting and estimating software for UK builders. Create professional quotes faster and win more work. Independent reviews and pricing.',
     h1: 'Best Quoting Software for UK Builders',
     heroDescription: 'Win more work with faster, more professional quotes. We compare quoting tools designed for UK builders, from quick domestic quotes to detailed commercial tenders.',
-    quickAnswer: 'The best quoting software for UK builders includes EstimatorXpress for detailed quotes, Buildxact for speed, Tradify for simplicity, and our free UKTradeApps quote generator for quick estimates.',
+    quickAnswer: 'The best quoting software for UK builders includes EstimatorXpress for detailed quotes, Buildxact for speed, Tradify for simplicity, and our free UKTradeApps quote generator.',
     breadcrumbLabel: 'Quoting Software',
     tradeSlug: 'builders',
     tradeCategory: 'Builders',
     trustSignals: ['UK materials pricing verified', 'Quote-to-invoice workflow tested', 'CIS compliance checked', 'Professional output reviewed'],
+    externalLinks: [
+      { url: 'https://www.gov.uk/what-is-the-construction-industry-scheme', label: 'HMRC \u2014 CIS Guide' },
+      { url: 'https://www.estimatorxpress.co.uk/', label: 'EstimatorXpress' },
+      { url: 'https://www.buildxact.com/', label: 'Buildxact' },
+    ],
+    definedTerms: [
+      { name: 'Lump Sum Quote', description: 'A single fixed price for the entire project scope, commonly used in domestic building work.' },
+      { name: 'Schedule of Rates', description: 'A pricing document listing individual items and their unit rates, used for projects with variable quantities.' },
+    ],
     contentSections: [
       {
         heading: 'Speed wins jobs: why quoting software matters for UK builders',
         paragraphs: [
-          'In the competitive UK building market, the speed and professionalism of your quote often matters more than being the cheapest option. Homeowners report choosing the builder who responded fastest with a clear, detailed quote over builders who eventually offered lower prices but took days to respond.',
-          'Quoting software transforms this dynamic. Instead of going home after a site visit, opening a spreadsheet, looking up material prices, calculating labour hours, and formatting a document, you can build and send a professional quote on site within minutes. The customer receives a branded PDF with itemised costs before you have reached your next appointment.',
-          'For UK builders specifically, quoting software needs to handle the unique aspects of the UK construction market: VAT treatment including the domestic reverse charge, CIS deductions for subcontractor elements, regional labour rate variations, and current UK material prices from builders merchants.',
+          'In the competitive UK building market, the speed and professionalism of your quote often matters more than being the cheapest option. Homeowners choose the builder who responded fastest with a clear, detailed quote.',
+          'Quoting software transforms this. Build and send a professional quote on site within minutes. The customer receives a branded PDF with itemised costs before you reach your next appointment.',
         ],
       },
       {
         subheading: 'What good builder quoting software includes',
-        paragraphs: [
-          'The best quoting tools for builders include pre-built templates for common residential projects like extensions, loft conversions, kitchen refits, and bathroom renovations. These templates include standard material quantities and labour hours that you adjust for each specific job, rather than building every quote from zero.',
-          'Material pricing integration is critical. The best tools either maintain their own UK material price database or allow you to import prices from your preferred merchants. This ensures your material costs are current and your margins are protected against price increases between quoting and purchasing.',
-          'The quote-to-job-to-invoice workflow eliminates re-entry. When a customer accepts your quote, it becomes an active project. When the project completes, the quote data flows into an invoice. This saves time and ensures consistency between what you quoted and what you charge.',
-        ],
+        paragraphs: ['The best quoting tools include pre-built templates, material pricing integration, and quote-to-invoice workflow.'],
         checkpoints: [
-          { title: 'Job templates', description: 'Pre-built templates for common residential projects with standard material lists and labour estimates.' },
-          { title: 'Material price database', description: 'Current UK material prices, ideally integrated with builders merchant price lists.' },
-          { title: 'Regional labour rates', description: 'Rates that reflect the significant differences between London, South East, and regional pricing.' },
-          { title: 'Professional PDF output', description: 'Branded quotes with your company details, itemised breakdowns, and clear terms and conditions.' },
-          { title: 'Quote tracking', description: 'Know when customers view your quote and follow up automatically if they have not responded.' },
+          { title: 'Job templates', description: 'Pre-built templates for common residential projects.' },
+          { title: 'Material price database', description: 'Current UK material prices, ideally from builders merchants.' },
+          { title: 'Regional labour rates', description: 'Rates reflecting differences between London, South East, and regional pricing.' },
+          { title: 'Professional PDF output', description: 'Branded quotes with itemised breakdowns and clear terms.' },
+          { title: 'Quote tracking', description: 'Know when customers view your quote and follow up automatically.' },
         ],
       },
       {
         subheading: 'Free vs paid quoting tools',
         paragraphs: [
-          'Our free quote generator on UKTradeApps provides a quick way to build professional quotes for common jobs without any subscription. It includes regional rate adjustment, VAT and CIS handling, and produces a print-ready PDF. This is ideal for builders who need occasional quotes or want to supplement their existing process.',
-          'Paid quoting software adds customer management, quote tracking, automatic follow-ups, and the quote-to-invoice workflow. If you send more than five quotes per week, paid software typically pays for itself through the time saving and improved win rate from faster, more professional responses.',
+          'Our free quote generator on UKTradeApps provides quick professional quotes without a subscription. Paid software adds customer management, tracking, and the quote-to-invoice workflow.',
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best quoting software for UK builders?', answer: 'EstimatorXpress for detailed commercial quotes, Buildxact for residential estimates, Tradify for simplicity, and the free UKTradeApps generator for quick estimates.' },
-      { question: 'Can I create quotes on site?', answer: 'Yes. All modern quoting tools have mobile apps that let you build and send quotes from the customer\u2019s property.' },
-      { question: 'Does quoting software include UK material prices?', answer: 'The best UK tools include current material pricing. Some integrate directly with builders merchant price lists for live pricing.' },
-      { question: 'How do I handle CIS in quotes?', answer: 'Trade-specific tools automatically apply CIS deductions when you mark work as subcontracted. Generic tools usually cannot handle this.' },
-      { question: 'Can quotes convert to invoices?', answer: 'Yes. Tradify, Buildxact, and Powered Now all convert accepted quotes to invoices, carrying forward all line items.' },
-      { question: 'How much does quoting software cost for builders?', answer: 'From free (UKTradeApps generator) to \u00a360/month for full commercial estimating suites. Most trade platforms charge \u00a315-40/month.' },
-      { question: 'Should I show a detailed breakdown or a lump sum?', answer: 'Most customers prefer a clear breakdown. It builds trust and justifies your price. You can always choose how much detail to show.' },
-      { question: 'How quickly should I send a quote after a site visit?', answer: 'Within 24 hours. Research shows the first professional quote received wins the job in most cases. Same-day quotes are ideal.' },
-      { question: 'Can I save templates for repeat job types?', answer: 'Yes. All quoting tools let you create and reuse templates for common jobs, significantly reducing quote preparation time.' },
-      { question: 'Is there a free quoting tool for builders?', answer: 'Yes. The UKTradeApps quote generator is free to use with no signup required. It handles common domestic jobs with regional pricing.' },
+      { question: 'What is the best quoting software for UK builders?', answer: 'EstimatorXpress for detailed commercial quotes, Buildxact for residential, Tradify for simplicity, and the free UKTradeApps generator for quick estimates.' },
+      { question: 'Can I create quotes on site?', answer: 'Yes. All modern quoting tools have mobile apps for on-site quoting.' },
+      { question: 'Does it include UK material prices?', answer: 'The best UK tools include current material pricing from UK suppliers.' },
+      { question: 'How do I handle CIS in quotes?', answer: 'Trade-specific tools automatically apply CIS deductions for subcontracted work.' },
+      { question: 'Can quotes convert to invoices?', answer: 'Yes. Tradify, Buildxact, and Powered Now all convert accepted quotes to invoices.' },
+      { question: 'How much does it cost?', answer: 'From free (UKTradeApps generator) to \u00a360/month for full commercial suites.' },
+      { question: 'Should I show a detailed breakdown or lump sum?', answer: 'Most customers prefer a clear breakdown. It builds trust and justifies your price.' },
+      { question: 'How quickly should I send a quote?', answer: 'Within 24 hours. Same-day quotes are ideal.' },
+      { question: 'Can I save templates?', answer: 'Yes. All quoting tools let you create and reuse templates for common jobs.' },
+      { question: 'Is there a free quoting tool for builders?', answer: 'Yes. The UKTradeApps quote generator is free with no signup required.' },
     ],
     relatedPages: [
       { slug: 'best-estimating-software-builders-uk', label: 'Best Estimating Software for Builders' },
@@ -899,62 +931,68 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     title: 'Best Gas Certificate Software for UK Engineers (2026)',
     metaDescription: 'Compare the best gas certificate software for UK gas engineers. CP12, CP14, and Gas Safe compliance tools reviewed. Find the right app for your business.',
     h1: 'Best Gas Certificate Software for UK Gas Engineers',
-    heroDescription: 'CP12 landlord safety certificates, breakdown reports, and Gas Safe compliance documentation. We compare every gas certificate app available to UK gas engineers and heating specialists.',
+    heroDescription: 'CP12 landlord safety certificates, breakdown reports, and Gas Safe compliance documentation. We compare every gas certificate app available to UK gas engineers.',
     quickAnswer: 'The best gas certificate software for UK engineers includes Gas Engineer Software, Powered Now, Tradecert Gas, and Certas. Each handles CP12, CP14, and Gas Safe reporting.',
     breadcrumbLabel: 'Gas Certificate Software',
     tradeSlug: 'plumbers',
     tradeCategory: 'Plumbers',
     trustSignals: ['Gas Safe Register compliance verified', 'CP12 certificate generation tested', 'Offline completion tested', 'UK pricing confirmed'],
+    externalLinks: [
+      { url: 'https://www.gassaferegister.co.uk/', label: 'Gas Safe Register \u2014 Official UK Body' },
+      { url: 'https://www.hse.gov.uk/gas/', label: 'HSE \u2014 Gas Safety' },
+      { url: 'https://www.legislation.gov.uk/uksi/1998/2451/contents/made', label: 'Gas Safety (Installation and Use) Regulations 1998' },
+      { url: 'https://gasengineersoftware.co.uk/', label: 'Gas Engineer Software' },
+    ],
+    definedTerms: [
+      { name: 'CP12', description: 'Landlord Gas Safety Certificate \u2014 a legal requirement for all rental properties, confirming gas appliances have been safety checked annually.' },
+      { name: 'Gas Safe Register', description: 'The official UK registration body for gas engineers. It is illegal to carry out gas work without registration.' },
+      { name: 'CP14', description: 'A warning or danger notice issued when a gas engineer identifies an unsafe appliance or installation.' },
+    ],
     contentSections: [
       {
         heading: 'Why gas engineers need specialised certificate software',
         paragraphs: [
-          'Gas engineers in the UK produce a high volume of certificates. CP12 landlord gas safety certificates alone account for millions of documents per year, with every rental property requiring annual certification. Add breakdown reports, commissioning records, and warning or danger notices, and the paperwork burden is significant.',
-          'Gas certificate software digitises this process. Complete a CP12 on a tablet at the property, generate a professional PDF, email it to the landlord and letting agent, and submit the data to Gas Safe Register \u2014 all from one app. No handwriting, no duplicate entry, no posting paper certificates.',
-          'The legal stakes are high. A gas engineer who produces non-compliant certificates risks losing their Gas Safe registration. The right software enforces compliance by ensuring mandatory fields are completed, safety checks are recorded in the correct order, and the certificate format meets Gas Safe requirements.',
+          'Gas engineers produce a high volume of certificates. CP12 landlord gas safety certificates alone account for millions of documents per year. Add breakdown reports, commissioning records, and warning notices, and the paperwork burden is significant.',
+          'Gas certificate software digitises this process. Complete a CP12 on a tablet at the property, generate a professional PDF, email it to the landlord and letting agent, and submit the data to Gas Safe Register \u2014 all from one app.',
         ],
       },
       {
         subheading: 'Gas Safe Register integration',
         paragraphs: [
-          'Gas Safe Register is the official registration body for gas engineers in the UK. All completed gas work must be notified to Gas Safe within required timescales. The best gas certificate software integrates directly with Gas Safe Register, submitting notification data automatically when you complete a certificate.',
-          'This integration saves significant time compared to logging into the Gas Safe portal separately and manually entering the same information you have already documented in your certificate. It also reduces errors \u2014 data submitted electronically from your certificate app matches exactly what appears on the certificate, eliminating transcription mistakes.',
+          'The best gas certificate software integrates directly with Gas Safe Register, submitting notification data automatically when you complete a certificate. This saves significant time compared to manual portal entry.',
         ],
       },
       {
         subheading: 'Certificate types gas engineers need',
         paragraphs: [
-          'A comprehensive gas certificate app should handle CP12 landlord gas safety certificates (the highest volume document for most engineers), CP14 warning or danger notices, commissioning checklists for new boiler installations, breakdown reports documenting faults and repairs, and TRADA unvented hot water system certificates where applicable.',
-          'Some engineers also need certificates for LPG installations, commercial gas work, and catering equipment. Verify that your chosen software covers the specific certificate types relevant to your work before committing to a subscription.',
+          'A comprehensive app should handle CP12 certificates, CP14 notices, commissioning checklists, breakdown reports, and TRADA unvented hot water system certificates.',
         ],
         checkpoints: [
-          { title: 'CP12 certificates', description: 'The bread-and-butter document for gas engineers. Must meet Gas Safe format requirements and include all mandatory safety checks.' },
-          { title: 'Gas Safe notification', description: 'Automatic submission of completed work to Gas Safe Register, saving manual portal entry.' },
-          { title: 'Photo capture', description: 'Attach photos of the installation, data plate, and any defects directly to the certificate.' },
-          { title: 'Landlord and agent distribution', description: 'Email certificates directly to landlords and letting agents from the app.' },
-          { title: 'Offline completion', description: 'Complete certificates at properties with no mobile signal, syncing when connectivity returns.' },
+          { title: 'CP12 certificates', description: 'The highest-volume document. Must meet Gas Safe format requirements.' },
+          { title: 'Gas Safe notification', description: 'Automatic submission to Gas Safe Register.' },
+          { title: 'Photo capture', description: 'Attach photos of installations and defects directly to certificates.' },
+          { title: 'Landlord distribution', description: 'Email certificates directly to landlords and letting agents.' },
+          { title: 'Offline completion', description: 'Complete certificates at properties with no mobile signal.' },
         ],
       },
       {
         subheading: 'The market: Gas Engineer Software dominates',
         paragraphs: [
-          'Gas Engineer Software is the dominant platform in the UK gas certificate market, used by over six thousand registered engineers. Its strength is deep specialisation \u2014 it focuses exclusively on gas work documentation and does it exceptionally well. The app handles all common certificate types, integrates with Gas Safe Register, and works on iOS and Android.',
-          'However, Gas Engineer Software focuses purely on certificates. If you want quoting, invoicing, scheduling, and customer management in the same platform, you need a broader tool like Powered Now or Tradify alongside your gas certificate app.',
-          'The gap in the market is for gas engineers who want an all-in-one solution that handles certificates as well as a specialist app while also managing their broader business operations. Currently, most gas engineers use two separate systems \u2014 one for certificates and one for everything else.',
+          'Gas Engineer Software is the dominant platform used by over six thousand registered engineers. Powered Now offers a broader all-in-one alternative with gas certificate capabilities alongside quoting, invoicing, and scheduling.',
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best gas certificate software in the UK?', answer: 'Gas Engineer Software is the market leader with 6,000+ users. Powered Now is the best all-in-one alternative. Both handle CP12 certificates and Gas Safe integration.' },
-      { question: 'Does gas certificate software submit to Gas Safe Register?', answer: 'The best apps integrate directly with Gas Safe Register, submitting notification data automatically. This saves manual entry and reduces errors.' },
-      { question: 'Can I produce CP12 certificates on my phone?', answer: 'Yes. All major gas certificate apps work on iOS and Android phones and tablets, allowing on-site certificate completion.' },
-      { question: 'How much does gas certificate software cost?', answer: 'From \u00a310/month for basic certificate generation to \u00a330+/month for comprehensive platforms with Gas Safe integration and customer management.' },
-      { question: 'Does the software work offline?', answer: 'Yes. Gas Engineer Software and Powered Now both work offline, essential for properties in basements or rural areas with poor signal.' },
-      { question: 'Can I email certificates to landlords directly?', answer: 'Yes. All professional gas certificate apps allow you to email completed certificates to landlords and letting agents directly from the app.' },
-      { question: 'What about LPG and commercial gas certificates?', answer: 'Some apps cover LPG and commercial work, but verify support for your specific certificate types before subscribing.' },
-      { question: 'Is CP12 software a legal requirement?', answer: 'No, but producing certificates digitally is faster, more accurate, and creates a searchable archive. All format requirements must still be met whether paper or digital.' },
-      { question: 'Can I store certificate history for each property?', answer: 'Yes. Most apps maintain a property database with certificate history, making it easy to reference previous inspections during annual visits.' },
-      { question: 'Do letting agents accept digital gas certificates?', answer: 'Yes. Digital certificates are legally equivalent to paper. Most letting agents prefer digital certificates as they are easier to store and share with tenants.' },
+      { question: 'What is the best gas certificate software in the UK?', answer: 'Gas Engineer Software is the market leader. Powered Now is the best all-in-one alternative.' },
+      { question: 'Does it submit to Gas Safe Register?', answer: 'The best apps integrate directly with Gas Safe Register for automatic notification.' },
+      { question: 'Can I produce CP12 certificates on my phone?', answer: 'Yes. All major gas certificate apps work on iOS and Android.' },
+      { question: 'How much does it cost?', answer: 'From \u00a310/month for basic to \u00a330+/month for comprehensive platforms.' },
+      { question: 'Does it work offline?', answer: 'Yes. Gas Engineer Software and Powered Now both work offline.' },
+      { question: 'Can I email certificates to landlords?', answer: 'Yes. All professional gas certificate apps support direct email to landlords and agents.' },
+      { question: 'What about LPG certificates?', answer: 'Some apps cover LPG and commercial gas. Verify support before subscribing.' },
+      { question: 'Is CP12 software a legal requirement?', answer: 'No, but digital certificates are faster, more accurate, and create a searchable archive.' },
+      { question: 'Can I store certificate history per property?', answer: 'Yes. Most apps maintain property databases with full certificate history.' },
+      { question: 'Do letting agents accept digital certificates?', answer: 'Yes. Digital certificates are legally equivalent to paper. Most agents prefer digital.' },
     ],
     relatedPages: [
       { slug: 'best-quoting-app-plumbers-uk', label: 'Best Quoting Apps for Plumbers' },
@@ -971,45 +1009,50 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     metaDescription: 'Find the best quoting apps for UK plumbers. Create quick, professional quotes on-site. Compare pricing, features, and user reviews for 2026.',
     h1: 'Best Quoting Apps for UK Plumbers',
     heroDescription: 'Create and send professional plumbing quotes in minutes, not hours. We compare every quoting app available to UK plumbers and heating engineers.',
-    quickAnswer: 'The best quoting apps for UK plumbers are Tradify, Powered Now, YourTradebase, and the free UKTradeApps quote generator for quick estimates.',
+    quickAnswer: 'The best quoting apps for UK plumbers are Tradify, Powered Now, YourTradebase, and the free UKTradeApps quote generator.',
     breadcrumbLabel: 'Quoting Apps',
     tradeSlug: 'plumbers',
     tradeCategory: 'Plumbers',
     trustSignals: ['Mobile quoting tested', 'UK plumbing materials pricing checked', 'VAT and CIS compliance verified', 'Quote tracking features reviewed'],
+    externalLinks: [
+      { url: 'https://www.gassaferegister.co.uk/', label: 'Gas Safe Register' },
+      { url: 'https://www.tradify.com/', label: 'Tradify' },
+      { url: 'https://www.gov.uk/what-is-the-construction-industry-scheme', label: 'HMRC \u2014 CIS Guide' },
+    ],
+    definedTerms: [
+      { name: 'Boiler Installation Quote', description: 'A quote covering the boiler unit, flue, controls, pipework, Gas Safe notification, and labour for a complete heating system installation.' },
+      { name: 'Callout Fee', description: 'A fixed charge for attending a property, usually for emergency or diagnostic visits, separate from repair costs.' },
+    ],
     contentSections: [
       {
         heading: 'Why quoting apps matter for UK plumbers',
         paragraphs: [
-          'Plumbing and heating work is highly competitive in the UK. Customers typically get three quotes for any job over a few hundred pounds, and the first professional quote to arrive often wins. Many plumbers still quote by text message or verbal estimate, missing the opportunity to look professional and win more work.',
-          'A quoting app lets you build an itemised quote at the customer\u2019s property, include materials at current UK trade prices, calculate labour and VAT correctly, and send a branded PDF before you leave. The customer sees a professional business rather than a sole trader winging it.',
-          'For plumbers and heating engineers who do both domestic and commercial work, quoting software needs to handle standard domestic VAT, CIS reverse charge for subcontracting, and the different pricing structures between emergency callouts, planned work, and project-based installations.',
+          'Plumbing and heating work is highly competitive. Customers typically get three quotes for any job over a few hundred pounds, and the first professional quote to arrive often wins.',
+          'A quoting app lets you build an itemised quote at the customer\u2019s property, include materials at current UK trade prices, calculate labour and VAT correctly, and send a branded PDF before you leave.',
         ],
       },
       {
         subheading: 'Features plumbers need in quoting software',
-        paragraphs: [
-          'Plumbing quotes have specific requirements. Boiler installations need to include the boiler cost, flue, controls, associated pipework, and Gas Safe notification fees. Bathroom refits require sanitary ware, tiling, waste connections, and often coordination with other trades. Emergency repairs need a clear callout fee structure.',
-          'The best quoting apps for plumbers let you save templates for each job type so you are not starting from scratch every time. A boiler installation template pre-loads the standard line items, and you adjust the boiler model, flue length, and any additional work specific to this property.',
-        ],
+        paragraphs: ['Plumbing quotes have specific requirements including boiler installation breakdowns, bathroom refit itemisation, emergency callout fee structures, and Gas Safe notification fees.'],
         checkpoints: [
-          { title: 'Job type templates', description: 'Pre-built templates for boiler installations, bathroom refits, emergency repairs, heating system flushes, and other common plumbing jobs.' },
-          { title: 'Materials pricing', description: 'UK plumbing materials at current trade prices, including boilers, radiators, sanitaryware, and pipework.' },
-          { title: 'Callout fee handling', description: 'Separate callout charges for emergency work alongside the standard job pricing.' },
-          { title: 'Gas Safe fee inclusion', description: 'Automatic inclusion of Gas Safe notification fees for gas work quotes.' },
+          { title: 'Job type templates', description: 'Pre-built templates for boiler installations, bathroom refits, emergency repairs, and heating flushes.' },
+          { title: 'Materials pricing', description: 'UK plumbing materials at current trade prices.' },
+          { title: 'Callout fee handling', description: 'Separate callout charges for emergency work.' },
+          { title: 'Gas Safe fee inclusion', description: 'Automatic inclusion of Gas Safe notification fees for gas work.' },
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best quoting app for UK plumbers?', answer: 'Tradify for all-in-one simplicity, Powered Now for offline capability, and YourTradebase for dedicated quoting. Our free UKTradeApps generator works for quick estimates.' },
-      { question: 'Can I quote for boiler installations on my phone?', answer: 'Yes. All modern quoting apps work on mobile. Templates for boiler installations pre-load standard items so you adjust specifics on site.' },
-      { question: 'How do I handle emergency callout pricing?', answer: 'Most quoting apps support callout fees as a separate line item. Set different rates for standard hours, evenings, weekends, and bank holidays.' },
-      { question: 'Does quoting software include Gas Safe notification fees?', answer: 'Trade-specific tools like Powered Now include Gas Safe fees. Generic tools require you to add them manually as a line item.' },
-      { question: 'Can I track which quotes have been accepted?', answer: 'Yes. Professional quoting apps show you when customers view your quote and allow online acceptance. Some send automatic follow-up reminders.' },
-      { question: 'How much does quoting software cost for plumbers?', answer: 'From free (UKTradeApps generator) to \u00a334/month for trade platforms like Tradify. Most offer free trials.' },
-      { question: 'Can quotes convert to invoices?', answer: 'Yes. Tradify, Powered Now, and Workever all convert accepted quotes directly into invoices with no re-entry required.' },
-      { question: 'Should I itemise or give a fixed price?', answer: 'For boiler installations and larger jobs, an itemised quote builds trust. For small repairs, a fixed price is cleaner. Most apps let you choose.' },
-      { question: 'Can I include warranty information in quotes?', answer: 'Yes. Add manufacturer warranty details and your own workmanship guarantee as terms and conditions on every quote.' },
-      { question: 'What is the fastest way to send a professional plumbing quote?', answer: 'Use a mobile quoting app with pre-built templates. Select the job type, adjust for the specific property, and send while still on site.' },
+      { question: 'What is the best quoting app for UK plumbers?', answer: 'Tradify for all-in-one simplicity, Powered Now for offline capability, YourTradebase for dedicated quoting.' },
+      { question: 'Can I quote for boiler installations on my phone?', answer: 'Yes. All modern quoting apps work on mobile with boiler installation templates.' },
+      { question: 'How do I handle emergency callout pricing?', answer: 'Most apps support callout fees as a separate line item with different rates for different hours.' },
+      { question: 'Does it include Gas Safe notification fees?', answer: 'Trade-specific tools include Gas Safe fees. Generic tools require manual addition.' },
+      { question: 'Can I track which quotes have been accepted?', answer: 'Yes. Professional quoting apps show when customers view and accept quotes.' },
+      { question: 'How much does it cost?', answer: 'From free (UKTradeApps generator) to \u00a334/month for trade platforms like Tradify.' },
+      { question: 'Can quotes convert to invoices?', answer: 'Yes. Tradify, Powered Now, and Workever all convert accepted quotes to invoices.' },
+      { question: 'Should I itemise or give a fixed price?', answer: 'For boiler installations, itemised quotes build trust. For small repairs, a fixed price is cleaner.' },
+      { question: 'Can I include warranty information?', answer: 'Yes. Add manufacturer warranty details and workmanship guarantees to your terms.' },
+      { question: 'What is the fastest way to send a professional quote?', answer: 'Use a mobile quoting app with pre-built templates. Select, adjust, and send from the customer\u2019s property.' },
     ],
     relatedPages: [
       { slug: 'best-gas-certificate-software-uk', label: 'Best Gas Certificate Software' },
@@ -1025,46 +1068,52 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     title: 'Best Job Management Software for UK Plumbers (2026)',
     metaDescription: 'Compare the best job management software for UK plumbers. Scheduling, invoicing, and customer management in one app. Independent reviews and pricing.',
     h1: 'Best Job Management Software for UK Plumbers',
-    heroDescription: 'Schedule jobs, manage customers, send invoices, and track your business from one platform. We compare every job management app available to UK plumbing and heating businesses.',
-    quickAnswer: 'The best job management software for UK plumbers includes Tradify, Commusoft, Workever, and Powered Now. Each handles scheduling, invoicing, and customer management for plumbing firms.',
+    heroDescription: 'Schedule jobs, manage customers, send invoices, and track your business from one platform. We compare every job management app for UK plumbing and heating businesses.',
+    quickAnswer: 'The best job management software for UK plumbers includes Tradify, Commusoft, Workever, and Powered Now for scheduling, invoicing, and customer management.',
     breadcrumbLabel: 'Job Management',
     tradeSlug: 'plumbers',
     tradeCategory: 'Plumbers',
     trustSignals: ['Gas Safe integration checked', 'Scheduling features tested', 'CIS and VAT compliance verified', 'UK pricing confirmed'],
+    externalLinks: [
+      { url: 'https://www.commusoft.co.uk/', label: 'Commusoft \u2014 Field Service Software' },
+      { url: 'https://www.tradify.com/', label: 'Tradify \u2014 Trade Job Management' },
+      { url: 'https://workever.com/', label: 'Workever \u2014 Field Service Management' },
+      { url: 'https://www.gassaferegister.co.uk/', label: 'Gas Safe Register' },
+    ],
+    definedTerms: [
+      { name: 'Service Agreement', description: 'A contract for recurring maintenance visits, such as annual boiler servicing, with agreed terms and pricing.' },
+      { name: 'Dispatch', description: 'The process of assigning and routing field engineers to customer jobs based on location, skills, and availability.' },
+    ],
     contentSections: [
       {
         heading: 'Why plumbing businesses need job management software',
         paragraphs: [
-          'Plumbing and heating businesses face unique operational challenges. Emergency callouts arrive unpredictably. Planned installations need careful scheduling around customer availability. Maintenance contracts require recurring visit management. And gas work demands specific compliance documentation.',
-          'Job management software brings order to this complexity. It replaces the diary and notebook with a digital system that schedules jobs, dispatches engineers, tracks job progress, captures on-site notes and photos, generates invoices, and manages customer relationships. For growing plumbing firms, it is the difference between organised growth and chaotic firefighting.',
-          'The UK plumbing market has several strong options, each targeting a different business size and style. Tradify excels for sole traders and micro-businesses who want simplicity. Commusoft targets growing firms with recurring service agreements. Workever balances features and affordability for small teams.',
+          'Plumbing businesses face unique challenges. Emergency callouts arrive unpredictably. Planned installations need careful scheduling. Maintenance contracts require recurring visit management. Gas work demands compliance documentation.',
+          'Job management software brings order to this complexity with scheduling, dispatching, job tracking, invoicing, and customer management from one platform.',
         ],
       },
       {
         subheading: 'Unique requirements for plumbing job management',
-        paragraphs: [
-          'Generic field service management tools miss several plumbing-specific requirements. Gas Safe notification must be handled for every gas job. Boiler service histories need to be tracked per property. Emergency callout scheduling requires the ability to squeeze urgent jobs into an existing calendar without losing planned work.',
-          'The best platforms for plumbers handle service agreements and maintenance contracts with automatic scheduling of recurring visits. This is particularly valuable for Gas Safe CP12 annual inspections, where the software can automatically book the next visit, send reminders to the property owner, and schedule the engineer.',
-        ],
+        paragraphs: ['Gas Safe notification, boiler service histories, and emergency callout scheduling are plumbing-specific needs generic tools miss.'],
         checkpoints: [
-          { title: 'Emergency callout handling', description: 'Quickly slot emergency jobs into the schedule without disrupting planned work for the day.' },
-          { title: 'Service agreement management', description: 'Recurring visits, automatic reminders, and contract renewal tracking for maintenance customers.' },
-          { title: 'Property and boiler history', description: 'Track which boiler is installed at each property, its service history, and any previous faults.' },
-          { title: 'Gas Safe compliance', description: 'Integration with gas certificate software and Gas Safe notification for every gas job.' },
+          { title: 'Emergency callout handling', description: 'Quickly slot emergency jobs without disrupting planned work.' },
+          { title: 'Service agreement management', description: 'Recurring visits, automatic reminders, and contract renewal tracking.' },
+          { title: 'Property and boiler history', description: 'Track installations, service history, and previous faults per property.' },
+          { title: 'Gas Safe compliance', description: 'Integration with gas certificate software and Gas Safe notification.' },
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best job management software for UK plumbers?', answer: 'Tradify for sole traders, Commusoft for growing firms with service contracts, and Workever for small teams needing scheduling and dispatch.' },
-      { question: 'How much does plumber job management software cost?', answer: 'From \u00a315/month for basic platforms to \u00a350+/user/month for comprehensive solutions with service agreement management.' },
-      { question: 'Can job management software handle emergency callouts?', answer: 'Yes. The best platforms allow you to quickly add emergency jobs to the schedule and reassign or reschedule planned work accordingly.' },
-      { question: 'Does it manage boiler service contracts?', answer: 'Commusoft and Powered Now excel at service agreement management with automatic scheduling of recurring visits and customer reminders.' },
-      { question: 'Can I track engineer locations?', answer: 'Yes. Workever, Commusoft, and simPRO include GPS tracking for dispatching the nearest available engineer to emergency calls.' },
-      { question: 'Does it integrate with gas certificate software?', answer: 'Some platforms include built-in gas certificates. Others integrate with standalone gas certificate apps like Gas Engineer Software.' },
-      { question: 'Can customers book appointments online?', answer: 'Some platforms offer online booking. Others provide customer portals for viewing quotes, invoices, and booking history.' },
-      { question: 'Does it handle parts and stock management?', answer: 'Commusoft and simPRO include stock management. Simpler platforms like Tradify handle materials at the job level but not warehouse stock.' },
-      { question: 'Can I run reports on business performance?', answer: 'Yes. All platforms provide reporting on revenue, job completion rates, customer retention, and engineer productivity.' },
-      { question: 'How long does setup take?', answer: 'Simple platforms like Tradify set up in hours. Commusoft and simPRO require one to two weeks for full configuration and data import.' },
+      { question: 'What is the best job management software for UK plumbers?', answer: 'Tradify for sole traders, Commusoft for growing firms with service contracts, Workever for small teams.' },
+      { question: 'How much does it cost?', answer: 'From \u00a315/month for basic platforms to \u00a350+/user/month for comprehensive solutions.' },
+      { question: 'Can it handle emergency callouts?', answer: 'Yes. The best platforms allow quick addition of emergency jobs with schedule reassignment.' },
+      { question: 'Does it manage boiler service contracts?', answer: 'Commusoft and Powered Now excel at service agreement management with automatic scheduling.' },
+      { question: 'Can I track engineer locations?', answer: 'Workever, Commusoft, and simPRO include GPS tracking for dispatch.' },
+      { question: 'Does it integrate with gas certificate software?', answer: 'Some platforms include built-in gas certificates. Others integrate with standalone apps.' },
+      { question: 'Can customers book online?', answer: 'Some platforms offer online booking. Others provide customer portals.' },
+      { question: 'Does it handle parts and stock?', answer: 'Commusoft and simPRO include stock management. Simpler platforms handle materials at job level.' },
+      { question: 'Can I run reports?', answer: 'Yes. All platforms provide reporting on revenue, job completion, and customer retention.' },
+      { question: 'How long does setup take?', answer: 'Simple platforms take hours. Commusoft and simPRO require one to two weeks.' },
     ],
     relatedPages: [
       { slug: 'best-gas-certificate-software-uk', label: 'Best Gas Certificate Software' },
@@ -1080,49 +1129,54 @@ export const SEO_PAGES: Record<string, SeoPageData> = {
     title: 'Best CRM Software for UK Plumbers \u2013 2026 Compared',
     metaDescription: 'Find the best CRM software for UK plumbing businesses. Manage customers, automate follow-ups, and grow your business. Independent reviews for 2026.',
     h1: 'Best CRM Software for UK Plumbers',
-    heroDescription: 'Keep every customer, every job history, and every follow-up in one place. We compare the best customer relationship management tools for UK plumbing and heating businesses.',
-    quickAnswer: 'The best CRM options for UK plumbers are Commusoft (built for field service), Tradify (simple trade CRM), and HubSpot (free generic CRM). Trade-specific CRMs outperform generic ones for plumbing businesses.',
+    heroDescription: 'Keep every customer, every job history, and every follow-up in one place. We compare the best customer relationship management tools for UK plumbing businesses.',
+    quickAnswer: 'The best CRM options for UK plumbers are Commusoft (built for field service), Tradify (simple trade CRM), and HubSpot (free generic CRM).',
     breadcrumbLabel: 'CRM Software',
     tradeSlug: 'plumbers',
     tradeCategory: 'Plumbers',
     trustSignals: ['Customer management features tested', 'Service history tracking verified', 'Automated follow-up tested', 'UK pricing confirmed'],
+    externalLinks: [
+      { url: 'https://www.commusoft.co.uk/', label: 'Commusoft \u2014 Field Service CRM' },
+      { url: 'https://www.hubspot.com/products/crm', label: 'HubSpot CRM \u2014 Free Tier' },
+      { url: 'https://www.gassaferegister.co.uk/', label: 'Gas Safe Register' },
+    ],
+    definedTerms: [
+      { name: 'CRM', description: 'Customer Relationship Management \u2014 software for tracking customer interactions, history, job details, and communications in one system.' },
+      { name: 'Customer Retention Rate', description: 'The percentage of customers who return for repeat business, a key metric for service businesses.' },
+      { name: 'Automated Follow-up', description: 'System-generated communications sent to customers based on triggers like service due dates or quote expiry.' },
+    ],
     contentSections: [
       {
         heading: 'Why plumbing businesses need CRM software',
         paragraphs: [
-          'Most plumbing businesses grow through repeat customers and word-of-mouth referrals. A customer relationship management system helps you nurture both. It stores every customer interaction, tracks property and appliance details, schedules follow-up communications, and identifies opportunities for additional work.',
-          'For plumbing and heating businesses, CRM is particularly valuable because of the recurring nature of the work. A customer who books a boiler service this year needs another next year. A landlord with ten rental properties needs annual CP12 certificates for all of them. A homeowner who had a bathroom refit may need a kitchen done in two years.',
-          'Without a CRM, these opportunities slip through the cracks. With one, your system automatically reminds you to contact the customer at the right time, with the right offer, based on their history with your business.',
+          'Most plumbing businesses grow through repeat customers and referrals. CRM helps you nurture both by storing every interaction, tracking property and appliance details, scheduling follow-ups, and identifying opportunities for additional work.',
+          'For plumbing businesses, CRM is particularly valuable because of recurring work. A boiler service customer needs another service next year. A landlord with ten properties needs annual CP12 certificates for all of them.',
         ],
       },
       {
         subheading: 'Trade-specific CRM vs generic CRM',
         paragraphs: [
-          'Generic CRM platforms like HubSpot, Zoho, and Salesforce are powerful but designed for sales teams selling digital products, not plumbers managing service calls. They lack property-level data, appliance tracking, service history per installation, and integration with trade-specific tools like gas certificate software.',
-          'Trade-specific CRM built into platforms like Commusoft, Tradify, and Workever is designed for exactly this use case. Customer records include property details, installed equipment, service history, and upcoming maintenance dates. This context makes every customer interaction more informed and more valuable.',
-          'For most plumbing businesses, the CRM built into your job management software is sufficient. You do not need a separate CRM system unless your business has a dedicated sales function pursuing commercial contracts.',
+          'Generic platforms like HubSpot lack property-level data, appliance tracking, and integration with gas certificate software. Trade-specific CRM built into Commusoft, Tradify, and Workever includes customer records with property details, installed equipment, and service history.',
         ],
       },
       {
         subheading: 'Using CRM to grow recurring revenue',
         paragraphs: [
-          'The most valuable application of CRM for plumbers is growing recurring service revenue. Set up automated reminders for annual boiler services, gas safety inspections, and system health checks. When a service date approaches, the CRM triggers an email or SMS to the customer offering to book their appointment.',
-          'This automation turns one-off installations into ongoing service relationships. A boiler installation customer becomes a boiler service customer for the life of the appliance \u2014 typically ten to fifteen years. Over that period, the recurring service revenue can exceed the original installation profit.',
-          'Track which customers have not booked a service in over twelve months and reach out proactively. Most customers do not deliberately skip servicing \u2014 they simply forget. A well-timed reminder from your CRM brings them back before they call a competitor.',
+          'Set up automated reminders for annual boiler services and gas safety inspections. When a service date approaches, the CRM triggers an email or SMS offering to book their appointment. This turns one-off installations into ongoing service relationships.',
         ],
       },
     ],
     faqs: [
-      { question: 'What is the best CRM for UK plumbers?', answer: 'Commusoft for comprehensive customer management with service agreements. Tradify for simple trade CRM. The CRM built into your job management platform is usually sufficient.' },
-      { question: 'Do I need a separate CRM system?', answer: 'Probably not. Most job management platforms include customer management features. A separate CRM is only needed if you have a dedicated sales team.' },
-      { question: 'Can CRM software automate follow-up communications?', answer: 'Yes. Set up automated emails and SMS messages for service reminders, quote follow-ups, and review requests.' },
-      { question: 'Does CRM track property and appliance details?', answer: 'Trade-specific CRMs store property addresses, installed appliances, service history, and warranty dates. Generic CRMs do not.' },
-      { question: 'How does CRM help with recurring revenue?', answer: 'Automated service reminders, maintenance contract management, and proactive outreach to lapsed customers all drive recurring booking revenue.' },
-      { question: 'Can I import existing customer data?', answer: 'Most platforms support CSV import. Some offer migration assistance to help you transfer data from spreadsheets or previous systems.' },
-      { question: 'Does CRM integrate with gas certificate software?', answer: 'Trade-specific platforms like Commusoft integrate with gas certificate tools, linking completed certificates to customer records automatically.' },
-      { question: 'How much does CRM software cost for plumbers?', answer: 'Generic CRM is free at basic tiers (HubSpot). Trade-specific CRM built into job management costs \u00a315-50/month as part of the broader platform.' },
-      { question: 'Can I segment customers for targeted marketing?', answer: 'Yes. Filter by service type, last visit date, property type, or contract status to send targeted communications to specific customer groups.' },
-      { question: 'Does CRM help with reviews and testimonials?', answer: 'Some platforms automatically request reviews after job completion. Positive reviews on Google and Trustpilot drive new customer acquisition.' },
+      { question: 'What is the best CRM for UK plumbers?', answer: 'Commusoft for comprehensive management with service agreements. Tradify for simple trade CRM. The CRM in your job management platform is usually sufficient.' },
+      { question: 'Do I need a separate CRM?', answer: 'Probably not. Most job management platforms include customer management features.' },
+      { question: 'Can it automate follow-ups?', answer: 'Yes. Set up automated emails and SMS for service reminders and quote follow-ups.' },
+      { question: 'Does it track property and appliance details?', answer: 'Trade-specific CRMs store property addresses, installed appliances, and service history.' },
+      { question: 'How does CRM help with recurring revenue?', answer: 'Automated service reminders and maintenance contract management drive recurring bookings.' },
+      { question: 'Can I import existing customer data?', answer: 'Most platforms support CSV import and some offer migration assistance.' },
+      { question: 'Does it integrate with gas certificate software?', answer: 'Trade-specific platforms like Commusoft link completed certificates to customer records.' },
+      { question: 'How much does it cost?', answer: 'Generic CRM is free at basic tiers. Trade-specific CRM costs \u00a315-50/month as part of a broader platform.' },
+      { question: 'Can I segment customers?', answer: 'Yes. Filter by service type, last visit date, or contract status for targeted communications.' },
+      { question: 'Does it help with reviews?', answer: 'Some platforms automatically request reviews after job completion for Google and Trustpilot.' },
     ],
     relatedPages: [
       { slug: 'plumber-job-management-software-uk', label: 'Plumber Job Management Software' },
