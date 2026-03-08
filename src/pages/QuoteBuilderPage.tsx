@@ -933,7 +933,7 @@ export default function QuoteBuilderPage() {
 
       <footer className="border-t border-surface-200 bg-white py-10">
         <div className="container-app text-center text-xs text-surface-400">
-          {'\u00a9'} {new Date().getFullYear()} UKTradeApps. Part of the Autaimate portfolio. All rights reserved.
+          {'\u00a9'} {new Date().getFullYear()} UKTradeApps. Built by{' '}<a href="https://autaimate.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-surface-600">Autaimate</a>. All rights reserved.
         </div>
       </footer>
     </>
