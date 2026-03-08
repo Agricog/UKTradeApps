@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.w3.org/2000/sitemaps/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://uktradeapps.co.uk/</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+
+  <!-- Trade category pages -->
+  <url>
+    <loc>https://uktradeapps.co.uk/electricians</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/builders</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/plumbers</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+
+  <!-- Listing pages -->
+  <url>
+    <loc>https://uktradeapps.co.uk/electricians/certvoice</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/electricians/workproof</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/electricians/tradecalcs</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/electricians/leadfortress</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/electricians/clearproof</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/builders/snaglog</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/builders/tradecalcs</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/builders/cranequote</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/builders/leadfortress</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/builders/clearproof</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/plumbers/tradecalcs</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/plumbers/leadfortress</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+
+  <!-- Tools -->
+  <url>
+    <loc>https://uktradeapps.co.uk/quiz</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/quote</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/submit</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+
+  <!-- Legal -->
+  <url>
+    <loc>https://uktradeapps.co.uk/privacy</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/terms</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+
+  <!-- SEO Guides — Electricians -->
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-electrical-certification-software-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-eicr-software-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/icertifi-alternatives</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-invoicing-software-electricians-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-quoting-app-electricians-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/electrician-job-management-software-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-pat-testing-app-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+
+  <!-- SEO Guides — Builders -->
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-estimating-software-builders-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-snagging-app-builders-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-project-management-software-small-builders-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-quoting-software-builders-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+
+  <!-- SEO Guides — Plumbers -->
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-gas-certificate-software-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-quoting-app-plumbers-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/plumber-job-management-software-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://uktradeapps.co.uk/guides/best-crm-plumbers-uk</loc>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+</urlset>
