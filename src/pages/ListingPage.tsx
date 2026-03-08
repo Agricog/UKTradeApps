@@ -470,7 +470,7 @@ export default function ListingPage() {
             </div>
           </div>
           <div className="mt-10 border-t border-surface-200 pt-6 text-center text-xs text-surface-400">
-            &copy; {new Date().getFullYear()} UKTradeApps. Part of the Autaimate portfolio. All rights reserved.
+            &copy; {new Date().getFullYear()} UKTradeApps. Built by{' '}<a href="https://autaimate.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-surface-600">Autaimate</a>. All rights reserved.
           </div>
         </div>
       </footer>
