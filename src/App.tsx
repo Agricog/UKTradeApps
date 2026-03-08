@@ -7,6 +7,8 @@ import QuizPage from './pages/QuizPage'
 import SubmitPage from './pages/SubmitPage'
 import QuoteBuilderPage from './pages/QuoteBuilderPage'
 import ComparisonPage from './pages/ComparisonPage'
+import PrivacyPage from './pages/PrivacyPage'
+import TermsPage from './pages/TermsPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes)
@@ -26,6 +28,10 @@ export default function App() {
 
         {/* Quote builder — must be before /:tradeSlug */}
         <Route path="/quote" element={<QuoteBuilderPage />} />
+
+        {/* Privacy and Terms — must be before /:tradeSlug */}
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
 
         {/* SEO comparison guides — 15 long-tail keyword pages */}
         <Route path="/guides/:pageSlug" element={<ComparisonPage />} />
